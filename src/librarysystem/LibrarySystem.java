@@ -57,9 +57,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	setPathToImage();
     	insertSplashImage();
 		
-//		createMenus();
-    	createJsplitPanal();
-    	createPanels();
+		createMenus();
+//    	createJsplitPanal();
+//    	createPanels();
 		//pack();
 		setSize(660,500);
 		isInitialized = true;
