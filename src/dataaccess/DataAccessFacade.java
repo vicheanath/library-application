@@ -22,7 +22,6 @@ public class DataAccessFacade implements DataAccess {
 	enum StorageType {
 		BOOKS, MEMBERS, USERS;
 	}
-	public static final String OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
@@ -108,6 +107,14 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	static void saveToStorage(StorageType type, Object ob) {
+		String OUTPUT_DIR ;
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("win")) {
+			OUTPUT_DIR = System.getProperty("user.dir")+ "\\src\\dataaccess\\storage";
+		} else {
+			OUTPUT_DIR = System.getProperty("user.dir")+ "/src/dataaccess/storage";
+		}
+
 		ObjectOutputStream out = null;
 		try {
 			Path path = FileSystems.getDefault().getPath(OUTPUT_DIR, type.toString());
@@ -127,6 +134,15 @@ public class DataAccessFacade implements DataAccess {
 	
 	
 	static Object readFromStorage(StorageType type) {
+
+		String OUTPUT_DIR ;
+		String os = System.getProperty("os.name").toLowerCase();
+		if (os.contains("win")) {
+			OUTPUT_DIR = System.getProperty("user.dir")+ "\\src\\dataaccess\\storage";
+		} else {
+			OUTPUT_DIR = System.getProperty("user.dir")+ "/src/dataaccess/storage";
+		}
+
 		ObjectInputStream in = null;
 		Object retVal = null;
 		try {

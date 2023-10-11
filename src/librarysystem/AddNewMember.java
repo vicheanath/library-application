@@ -48,15 +48,15 @@ public class AddNewMember extends JPanel implements LibWindow {
         JPanel memberInfoPanel = new JPanel();
         memberInfoPanel.setLayout(new GridLayout(9, 2)); // 9 rows, 2 columns
 
-        // SystemController dataAccessFacade = new SystemController();
+        SystemController dataAccessFacade = new SystemController();
 
-        // List<LibraryMember> libraryMembers = dataAccessFacade.allMembers();
+        List<LibraryMember> libraryMembers = dataAccessFacade.allMembers();
 
         // Labels and Text Fields
         memberInfoPanel.add(new JLabel("Member ID:"));
         memberIdField = new JTextField(10);
-        // memberIdField.setEditable(false);
-        // memberIdField.setText(LibraryMember.genId(libraryMembers));
+        memberIdField.setEditable(false);
+        memberIdField.setText(LibraryMember.genId(libraryMembers));
         memberInfoPanel.add(memberIdField);
 
 
