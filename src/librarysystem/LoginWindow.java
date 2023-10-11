@@ -23,8 +23,9 @@ import business.SystemController;
 
 public class LoginWindow extends JFrame implements LibWindow {
     public static final LoginWindow INSTANCE = new LoginWindow();
+
 	private boolean isInitialized = false;
-	
+
 	private JPanel mainPanel;
 	private JPanel upperHalf;
 	private JPanel middleHalf;
@@ -42,10 +43,7 @@ public class LoginWindow extends JFrame implements LibWindow {
 	private JLabel label;
 	private JButton loginButton;
 	private JButton logoutButton;
-	
-	
-	
-	
+
 	public boolean isInitialized() {
 		return isInitialized;
 	}

@@ -42,7 +42,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static HashMap<String, LibraryMember> readMemberMap() {
+	public  HashMap<String, LibraryMember> readMemberMap() {
 		//Returns a Map with name/value pairs being
 		//   memberId -> LibraryMember
 		return (HashMap<String, LibraryMember>) readFromStorage(

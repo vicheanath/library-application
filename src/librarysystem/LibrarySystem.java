@@ -27,7 +27,7 @@ import business.SystemController;
 
 public class LibrarySystem extends JFrame implements LibWindow {
 	ControllerInterface ci = new SystemController();
-	public final static LibrarySystem INSTANCE =new LibrarySystem();
+	public final static LibrarySystem INSTANCE = new LibrarySystem();
 	JPanel mainPanel;
 	JMenuBar menuBar;
     JMenu options;
@@ -44,7 +44,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		LoginWindow.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
 		AllBookIdsWindow.INSTANCE,
-			librarysystem.AddNewMember.INSTANCE
+		AddNewMember.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
@@ -76,7 +76,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
     
     private void setPathToImage() {
     	String currDirectory = System.getProperty("user.dir");
-    	pathToImage = currDirectory+"/src/librarysystem/library.jpg";
+    	pathToImage = currDirectory+"/librarysystem/library.jpg";
     }
     
     private void insertSplashImage() {
@@ -131,21 +131,19 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   allMemberIds = new JMenuItem("All Member Ids");
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
 	   addNewMember = new JMenuItem("Add New Member");
-	   addNewMember.addActionListener(new AddNewMember());
+	   addNewMember.addActionListener(new AddNewMemberListener());
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
 		options.add(addNewMember);
     }
     class LoginListener implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			LibrarySystem.hideAllWindows();
 			LoginWindow.INSTANCE.init();
 			Util.centerFrameOnDesktop(LoginWindow.INSTANCE);
 			LoginWindow.INSTANCE.setVisible(true);
-			
 		}
     	
     }
@@ -203,13 +201,14 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		}
     	
     }
-	class AddNewMember implements ActionListener{
+	class AddNewMemberListener implements ActionListener{
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			AddNewMember.INSTANCE.init();
 			LibrarySystem.hideAllWindows();
-			librarysystem.AddNewMember.INSTANCE.init();
-			Util.centerFrameOnDesktop(librarysystem.AddNewMember.INSTANCE);
-			librarysystem.AddNewMember.INSTANCE.setVisible(true);
+			Util.centerFrameOnDesktop(AddNewMember.INSTANCE);
+			AddNewMember.INSTANCE.setVisible(true);
 
 		}
 	}
