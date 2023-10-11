@@ -1,5 +1,7 @@
 package librarysystem;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,10 +12,12 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 import business.ControllerInterface;
 import business.SystemController;
@@ -28,6 +32,10 @@ public class LibrarySystem extends JFrame implements LibWindow {
     JMenuItem login, allBookIds, allMemberIds; 
     String pathToImage;
     private boolean isInitialized = false;
+    
+    JList<String> linkList;
+	//context for CardLayout
+	JPanel cards;
     
     private static LibWindow[] allWindows = { 
     	LibrarySystem.INSTANCE,
@@ -49,7 +57,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	setPathToImage();
     	insertSplashImage();
 		
-		createMenus();
+//		createMenus();
+    	createJsplitPanal();
+    	createPanels();
 		//pack();
 		setSize(660,500);
 		isInitialized = true;
@@ -70,12 +80,46 @@ public class LibrarySystem extends JFrame implements LibWindow {
         ImageIcon image = new ImageIcon(pathToImage);
 		mainPanel.add(new JLabel(image));	
     }
+//    Create Jsplitpanael
+    private void createJsplitPanal() {
+    	String[] items = {"Books", "User", "Item 3"};
+		linkList = new JList<String>(items);				
+		createPanels();	
+		// set up split panes
+		JSplitPane splitPane = new JSplitPane(
+			JSplitPane.HORIZONTAL_SPLIT, linkList, cards);
+		splitPane.setDividerLocation(100);
+		//default layout for JFrame is BorderLayout; add method 
+		//adds to contentpane
+		add(splitPane, BorderLayout.CENTER);
+    }
+    
+    public void createPanels() {
+		JPanel[] panel=new JPanel[3];
+		cards = new JPanel(new CardLayout());
+		for(int i=0;i<3;i++)
+        {
+        	panel[i]=new JPanel();
+			panel[i].add(new JLabel("Item "+(i+1)+" Panel"));
+        	cards.add(panel[i], String.valueOf(i+1));
+        }
+		//connect JList elements to CardLayout panels
+		linkList.addListSelectionListener(event -> {
+			Integer v = linkList.getSelectedIndex();
+			//String value = linkList.getSelectedValue().toString();
+			CardLayout cl = (CardLayout) (cards.getLayout());
+			cl.show(cards, String.valueOf(v+1));
+		});
+
+	}
+    
     private void createMenus() {
     	menuBar = new JMenuBar();
 		menuBar.setBorder(BorderFactory.createRaisedBevelBorder());
 		addMenuItems();
 		setJMenuBar(menuBar);		
     }
+    
     
     private void addMenuItems() {
        options = new JMenu("Options");  
