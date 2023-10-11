@@ -35,7 +35,15 @@ final public class LibraryMember extends Person implements Serializable {
 	public CheckoutRecordEntry createEntry(BookCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
 		return new CheckoutRecordEntry(copy, checkoutDate, dueDate);
 	}
+
+	public String genId(List<LibraryMember> list){
+		if (list.size() == 0){
+			return "1";
+		}
+		String lastId =  list.get(list.size()-1).getMemberId();
+		return String.valueOf(lastId +1);
 	
+	}
 	
 	@Override
 	public String toString() {
