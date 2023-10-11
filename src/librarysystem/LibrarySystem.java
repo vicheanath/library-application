@@ -23,6 +23,8 @@ import business.ControllerInterface;
 import business.SystemController;
 
 
+
+
 public class LibrarySystem extends JFrame implements LibWindow {
 	ControllerInterface ci = new SystemController();
 	public final static LibrarySystem INSTANCE =new LibrarySystem();
@@ -74,16 +76,16 @@ public class LibrarySystem extends JFrame implements LibWindow {
     
     private void setPathToImage() {
     	String currDirectory = System.getProperty("user.dir");
-    	pathToImage = currDirectory+"\\src\\librarysystem\\library.jpg";
+    	pathToImage = currDirectory+"/src/librarysystem/library.jpg";
     }
     
     private void insertSplashImage() {
         ImageIcon image = new ImageIcon(pathToImage);
 		mainPanel.add(new JLabel(image));	
     }
-//    Create Jsplitpanael
+//    Create JSplitPanael
     private void createJsplitPanal() {
-    	String[] items = {"Books", "User", "Item 3"};
+    	String[] items = {"Books", "User", "Members"};
 		linkList = new JList<String>(items);				
 		createPanels();	
 		// set up split panes
@@ -193,7 +195,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			System.out.println(sb.toString());
 			AllMemberIdsWindow.INSTANCE.setData(sb.toString());
 			AllMemberIdsWindow.INSTANCE.pack();
-			//AllMemberIdsWindow.INSTANCE.setSize(660,500);
+			AllMemberIdsWindow.INSTANCE.setSize(660,500);
 			Util.centerFrameOnDesktop(AllMemberIdsWindow.INSTANCE);
 			AllMemberIdsWindow.INSTANCE.setVisible(true);
 			

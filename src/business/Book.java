@@ -113,8 +113,8 @@ final public class Book implements Serializable {
 		return maxCheckoutLength;
 	}
 
-	
-	
-	
+	public int getId() {
+		return Integer.parseInt(isbn);
+	}
 	
 }

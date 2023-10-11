@@ -20,16 +20,14 @@ public class DataAccessFacade implements DataAccess {
 	enum StorageType {
 		BOOKS, MEMBERS, USERS;
 	}
-	
 	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
 			+ "\\dataaccess\\storage";
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
 	public void saveNewMember(LibraryMember member) {
-		HashMap<String, LibraryMember> mems = new HashMap<>();
+		HashMap<String, LibraryMember> mems = readMemberMap();
 		String memberId = member.getMemberId();
-		System.out.println(member.getFirstName());
 		mems.put(memberId, member);
 		saveToStorage(StorageType.MEMBERS, mems);	
 	}

@@ -12,7 +12,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
+import business.Book;
 import business.ControllerInterface;
 import business.SystemController;
 
@@ -59,7 +63,7 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 		FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 25, 25);
 		middlePanel.setLayout(fl);
 		textArea = new TextArea(8, 20);
-		//populateTextArea();
+		populateTextArea();
 		middlePanel.add(textArea);
 		
 	}
@@ -86,16 +90,26 @@ public class AllBookIdsWindow extends JFrame implements LibWindow {
 		textArea.setText(data);
 	}
 	
-//	private void populateTextArea() {
-//		//populate
-//		List<String> ids = ci.allBookIds();
-//		Collections.sort(ids);
-//		StringBuilder sb = new StringBuilder();
-//		for(String s: ids) {
-//			sb.append(s + "\n");
-//		}
-//		textArea.setText(sb.toString());
-//	}
+	private void populateTextArea() {
+		//populate
+		List<Book> books = ci.allBooks();
+		Collections.sort(books, (b1, b2) -> b1.getIsbn().compareTo(b2.getIsbn()));
+
+		String[] columnNames = {"ISBN", "Title", "Authors", "Max Checkout Length"};
+		
+		DefaultTableModel model = new DefaultTableModel(null, columnNames);
+
+		for (Book book : books) {
+			Object[] rowData = new Object[]{book.getIsbn(), book.getTitle(), book.getAuthors(), book.getMaxCheckoutLength()};
+			model.addRow(rowData);
+		}
+
+
+		JTable table = new JTable(model);
+		JScrollPane scrollPane = new JScrollPane(table);
+		table.setFillsViewportHeight(true);
+		middlePanel.add(scrollPane);
+	}
 
 	@Override
 	public boolean isInitialized() {
