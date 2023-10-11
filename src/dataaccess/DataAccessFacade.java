@@ -11,7 +11,9 @@ import java.util.List;
 
 import business.Book;
 import business.BookCopy;
+import business.CheckoutRecordEntry;
 import business.LibraryMember;
+import business.LibrarySystemException;
 import dataaccess.DataAccessFacade.StorageType;
 
 
@@ -41,7 +43,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public HashMap<String, LibraryMember> readMemberMap() {
+	public static HashMap<String, LibraryMember> readMemberMap() {
 		//Returns a Map with name/value pairs being
 		//   memberId -> LibraryMember
 		return (HashMap<String, LibraryMember>) readFromStorage(
@@ -77,6 +79,36 @@ public class DataAccessFacade implements DataAccess {
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
 	}
+
+	/*
+	 * Search member by member id
+	 * @return LibraryMember
+	 * @param memberId
+	 */
+	@Override
+	public LibraryMember searchMember(String memberId) throws NullPointerException {
+		HashMap<String, LibraryMember> members = readMemberMap();
+		LibraryMember member = members.get(memberId);
+		if (member == null) {
+			throw new NullPointerException("No members in the library");
+		}
+		return member;
+	}
+
+	/*
+	 * Search book by isbn
+	 * @return Book
+	 * @param isbn
+	 */
+	@Override
+	public Book searchBook(String isbn) throws NullPointerException {
+		HashMap<String, Book> books = readBooksMap();
+		Book book = books.get(isbn);
+		if (book == null) {
+			throw new NullPointerException("No books in the library");
+		}
+		return book;
+	}
 	
 	static void saveToStorage(StorageType type, Object ob) {
 		ObjectOutputStream out = null;
@@ -94,6 +126,8 @@ public class DataAccessFacade implements DataAccess {
 			}
 		}
 	}
+
+	
 	
 	static Object readFromStorage(StorageType type) {
 		ObjectInputStream in = null;

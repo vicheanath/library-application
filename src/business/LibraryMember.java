@@ -1,5 +1,6 @@
 package business;
 
+import java.util.List;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -20,6 +21,20 @@ final public class LibraryMember extends Person implements Serializable {
 		return memberId;
 	}
 
+	public void checkOut(BookCopy copy, LocalDate checkoutDate, LocalDate toDayPlushCheckoutLength) {
+		if (copy.isAvailable()) {
+			copy.changeAvailability();
+			CheckoutRecordEntry entry = createEntry(copy, checkoutDate, toDayPlushCheckoutLength);
+			CheckoutRecord record = new CheckoutRecord();
+			record.addCheckoutRecordEntry(entry);
+		} else {
+			System.out.println("Book is not available");
+		}
+	}
+
+	public CheckoutRecordEntry createEntry(BookCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
+		return new CheckoutRecordEntry(copy, checkoutDate, dueDate);
+	}
 	
 	
 	@Override
