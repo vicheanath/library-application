@@ -23,7 +23,6 @@ import business.SystemController;
 
 public class LoginWindow extends JFrame implements LibWindow {
     public static final LoginWindow INSTANCE = new LoginWindow();
-	
 	private boolean isInitialized = false;
 	
 	private JPanel mainPanel;
@@ -176,7 +175,7 @@ public class LoginWindow extends JFrame implements LibWindow {
     		rightTextPanel.add(topText,BorderLayout.NORTH);
     		rightTextPanel.add(bottomText,BorderLayout.CENTER);
     	}
-    	
+
     	private void addBackButtonListener(JButton butn) {
     		butn.addActionListener(evt -> {
     			LibrarySystem.hideAllWindows();
