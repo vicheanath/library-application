@@ -56,5 +56,4 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readMemberMap().values());
 		return retval;
 	}
-	
 }
