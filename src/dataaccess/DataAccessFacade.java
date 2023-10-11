@@ -22,8 +22,7 @@ public class DataAccessFacade implements DataAccess {
 	enum StorageType {
 		BOOKS, MEMBERS, USERS;
 	}
-	public static final String OUTPUT_DIR = System.getProperty("user.dir") 
-			+ "\\dataaccess\\storage";
+	public static final String OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
@@ -42,7 +41,7 @@ public class DataAccessFacade implements DataAccess {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static HashMap<String, LibraryMember> readMemberMap() {
+	public HashMap<String, LibraryMember> readMemberMap() {
 		//Returns a Map with name/value pairs being
 		//   memberId -> LibraryMember
 		return (HashMap<String, LibraryMember>) readFromStorage(
@@ -78,7 +77,6 @@ public class DataAccessFacade implements DataAccess {
 		memberList.forEach(member -> members.put(member.getMemberId(), member));
 		saveToStorage(StorageType.MEMBERS, members);
 	}
-
 	/*
 	 * Search member by member id
 	 * @return LibraryMember

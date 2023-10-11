@@ -1,6 +1,8 @@
 package librarysystem;
 
+import business.LibraryMember;
 import business.SystemController;
+import dataaccess.DataAccessFacade;
 
 import javax.swing.*;
 import java.awt.*;
@@ -46,10 +48,17 @@ public class AddNewMember extends JPanel implements LibWindow {
         JPanel memberInfoPanel = new JPanel();
         memberInfoPanel.setLayout(new GridLayout(9, 2)); // 9 rows, 2 columns
 
+        // SystemController dataAccessFacade = new SystemController();
+
+        // List<LibraryMember> libraryMembers = dataAccessFacade.allMembers();
+
         // Labels and Text Fields
         memberInfoPanel.add(new JLabel("Member ID:"));
         memberIdField = new JTextField(10);
+        // memberIdField.setEditable(false);
+        // memberIdField.setText(LibraryMember.genId(libraryMembers));
         memberInfoPanel.add(memberIdField);
+
 
         memberInfoPanel.add(new JLabel("First Name:"));
         firstNameField = new JTextField(20);
