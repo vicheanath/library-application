@@ -29,7 +29,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	JPanel mainPanel;
 	JMenuBar menuBar;
     JMenu options;
-    JMenuItem login, allBookIds, allMemberIds; 
+    JMenuItem login, allBookIds, allMemberIds, addNewMember;
     String pathToImage;
     private boolean isInitialized = false;
     
@@ -41,7 +41,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	LibrarySystem.INSTANCE,
 		LoginWindow.INSTANCE,
 		AllMemberIdsWindow.INSTANCE,	
-		AllBookIdsWindow.INSTANCE
+		AllBookIdsWindow.INSTANCE,
+			librarysystem.AddNewMember.INSTANCE
 	};
     	
 	public static void hideAllWindows() {		
@@ -57,9 +58,9 @@ public class LibrarySystem extends JFrame implements LibWindow {
     	setPathToImage();
     	insertSplashImage();
 		
-//		createMenus();
-    	createJsplitPanal();
-    	createPanels();
+		createMenus();
+//    	createJsplitPanal();
+//    	createPanels();
 		//pack();
 		setSize(660,500);
 		isInitialized = true;
@@ -112,15 +113,12 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		});
 
 	}
-    
     private void createMenus() {
     	menuBar = new JMenuBar();
 		menuBar.setBorder(BorderFactory.createRaisedBevelBorder());
 		addMenuItems();
 		setJMenuBar(menuBar);		
     }
-    
-    
     private void addMenuItems() {
        options = new JMenu("Options");  
  	   menuBar.add(options);
@@ -130,11 +128,13 @@ public class LibrarySystem extends JFrame implements LibWindow {
  	   allBookIds.addActionListener(new AllBookIdsListener());
  	   allMemberIds = new JMenuItem("All Member Ids");
  	   allMemberIds.addActionListener(new AllMemberIdsListener());
+	   addNewMember = new JMenuItem("Add New Member");
+	   addNewMember.addActionListener(new AddNewMember());
  	   options.add(login);
  	   options.add(allBookIds);
  	   options.add(allMemberIds);
+		options.add(addNewMember);
     }
-    
     class LoginListener implements ActionListener {
 
 		@Override
@@ -201,7 +201,16 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		}
     	
     }
+	class AddNewMember implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			LibrarySystem.hideAllWindows();
+			librarysystem.AddNewMember.INSTANCE.init();
+			Util.centerFrameOnDesktop(librarysystem.AddNewMember.INSTANCE);
+			librarysystem.AddNewMember.INSTANCE.setVisible(true);
 
+		}
+	}
 	@Override
 	public boolean isInitialized() {
 		return isInitialized;
