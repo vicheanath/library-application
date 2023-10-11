@@ -15,7 +15,6 @@ import javax.swing.table.DefaultTableModel;
 
 import business.ControllerInterface;
 import business.LibraryMember;
-import business.Person;
 import business.SystemController;
 
 
@@ -49,7 +48,7 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 	
 	public void defineTopPanel() {
 		topPanel = new JPanel();
-		JLabel AllIDsLabel = new JLabel("All Member IDs");
+		JLabel AllIDsLabel = new JLabel("Member");
 		Util.adjustLabelFont(AllIDsLabel, Util.DARK_BLUE, true);
 		topPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		topPanel.add(AllIDsLabel);
@@ -61,6 +60,7 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 		middlePanel.setLayout(fl);
 		textArea = new TextArea(8,20);
 		middlePanel.add(textArea);
+		populateTextArea();
 		
 	}
 	
@@ -70,7 +70,7 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 		lowerPanel.setLayout(fl);
 		JButton backButton = new JButton("<== Back to Main");
 		addBackButtonListener(backButton);
-		populateTextArea();
+		
 		lowerPanel.add(backButton);
 	}
 	
@@ -107,7 +107,6 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 			Object[] row = new Object[]{p.getMemberId(), p.getFirstName(), p.getLastName(), p.getTelephone(), p.getAddress().getStreet(), p.getAddress().getCity(), p.getAddress().getState(), p.getAddress().getZip()};
 			model.addRow(row);
 		}
-
 		JTable table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
