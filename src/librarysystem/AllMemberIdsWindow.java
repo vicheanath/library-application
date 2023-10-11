@@ -9,8 +9,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 import business.ControllerInterface;
+import business.LibraryMember;
+import business.Person;
 import business.SystemController;
 
 
@@ -65,6 +70,7 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 		lowerPanel.setLayout(fl);
 		JButton backButton = new JButton("<== Back to Main");
 		addBackButtonListener(backButton);
+		populateTextArea();
 		lowerPanel.add(backButton);
 	}
 	
@@ -88,6 +94,24 @@ public class AllMemberIdsWindow extends JFrame implements LibWindow {
 	public void isInitialized(boolean val) {
 		isInitialized = val;
 		
+	}
+
+	private void populateTextArea() {
+		List<LibraryMember> members = ci.allMembers();
+
+		String[] col = {"Member ID", "First Name", "Last Name", "Telephone", "Street", "City", "State", "Zip"};
+
+		DefaultTableModel model = new DefaultTableModel(null,col);
+
+		for (LibraryMember p : members) {
+			Object[] row = new Object[]{p.getMemberId(), p.getFirstName(), p.getLastName(), p.getTelephone(), p.getAddress().getStreet(), p.getAddress().getCity(), p.getAddress().getState(), p.getAddress().getZip()};
+			model.addRow(row);
+		}
+
+		JTable table = new JTable(model);
+		JScrollPane scrollPane = new JScrollPane(table);
+		table.setFillsViewportHeight(true);
+		middlePanel.add(scrollPane);
 	}
 	
 }
