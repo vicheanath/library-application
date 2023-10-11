@@ -36,12 +36,12 @@ final public class LibraryMember extends Person implements Serializable {
 		return new CheckoutRecordEntry(copy, checkoutDate, dueDate);
 	}
 
-	public String genId(List<LibraryMember> list){
-		if (list.size() == 0){
+	public static String genId(List<LibraryMember> list){
+		if (list == null){
 			return "1";
 		}
-		String lastId =  list.get(list.size()-1).getMemberId();
-		return String.valueOf(lastId +1);
+		String lastId =  list.get(0).getMemberId();
+		return String.valueOf(Integer.parseInt(lastId) + 1);
 	
 	}
 	
