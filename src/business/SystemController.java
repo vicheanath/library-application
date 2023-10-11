@@ -1,5 +1,6 @@
 package business;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,5 +64,32 @@ public class SystemController implements ControllerInterface {
 		List<LibraryMember> retval = new ArrayList<>();
 		retval.addAll(da.readMemberMap().values());
 		return retval;
+	}
+
+	public LocalDate todayPlusCheckoutLength(int maxCheckoutLength) {
+		return LocalDate.now().plusDays(maxCheckoutLength);
+	}
+
+	@Override
+	public void checkoutBook(String memberId, String isbn) throws LibrarySystemException {
+		//TODO: implement checkoutBook
+		DataAccess da = new DataAccessFacade();
+		// 1. serach member by memberId
+		da.searchMember(memberId);
+		// 2. search book by isbn
+		Book book = da.searchBook(isbn);
+		// 3. check if the book is available
+		if (book.isAvailable()) {
+			// 4. get next available copy book
+			BookCopy copy = book.getNextAvailableCopy();
+			// 5. get max content checkout
+			int maxCheckoutLength = book.getMaxCheckoutLength();
+			// 6. checkCoutRecordEntry(copy, maxCheckoutLength)
+			LibraryMember member = da.searchMember(memberId);
+
+			member.checkOut(copy, LocalDate.now(), todayPlusCheckoutLength(maxCheckoutLength));
+		} else {
+			throw new LibrarySystemException("Book is not available");
+		}
 	}
 }
