@@ -42,11 +42,20 @@ public class LibrarySystem extends JFrame implements LibWindow {
     JList<String> linkList;
 	//context for CardLayout
 	JPanel cards;
-    
-    private static LibWindow[] allWindows = { 
+
+
+	String[] adminRights = {"Login/Logout", "Add member", "Search Member","Add Book", "Add Book Copy", "Check Status of Book Copy", "All Member IDs", "All Book IDs"};
+
+	String[] librarian = {"Login/Logout", "Check Status of Book Copy", "All Member IDs", "All Book IDs"};
+
+	String[] bookOptions = {"Login/Logout", "Add member", "Search Member","Checkout Book","Add Book", "Add Book Copy", "Check Status of Book Copy", "All Member IDs", "All Book IDs"};
+
+
+	private static LibWindow[] allWindows = {
     	LibrarySystem.INSTANCE,
 		LoginWindow.INSTANCE,
-		AllMemberIdsWindow.INSTANCE,	
+		AllMemberIdsWindow.INSTANCE,
+			librarysystem.StarterPage.INSTANCE,
 		AllBookIdsWindow.INSTANCE,
 			librarysystem.AddNewMember.INSTANCE
 	};
@@ -128,7 +137,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		mainPanel.add(new JLabel(image));	
     }
 //    Create JSplitPanael
-    private void createJsplitPanal() {
+    /*private void createJsplitPanal() {
     	String[] items = {"Books", "User", "Members"};
 		linkList = new JList<String>(items);				
 		createPanels();	
@@ -139,7 +148,7 @@ public class LibrarySystem extends JFrame implements LibWindow {
 		//default layout for JFrame is BorderLayout; add method 
 		//adds to contentpane
 		add(splitPane, BorderLayout.CENTER);
-    }
+    }*/
     
     public void createPanels() {
 		JPanel[] panel=new JPanel[3];
@@ -257,6 +266,8 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			librarysystem.AddNewMember.INSTANCE.setVisible(true);
 
 		}
+
+
 	}
 	@Override
 	public boolean isInitialized() {
