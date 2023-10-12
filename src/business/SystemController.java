@@ -109,21 +109,13 @@ public class SystemController implements ControllerInterface {
 
 
 
-	//////Not yet Confirmed///////
-	public static void main(String[] args) {
-		SystemController controller = new SystemController();
-		//System.out.println(controller.allBooks());
-		System.out.println(controller.allBooks().size());
-		List<Author> authors = new ArrayList<>();
-		Address address = new Address("Iowa", "Iowa", "Iowa", "Iowa");
-		Author author = new Author("Collin", "Collin","Collin",address,"Iowa");
-		authors.add(author);
-		controller.addNewBook("12","Hello",7,authors);
-		System.out.println(controller.allBooks().size());
-
-	}
-	public void addNewBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
-		Book book = new Book(isbn,title,maxCheckoutLength,authors);
+	public void addNewBook(String isbn, String title, String maxCheckoutLength, String authorFirst,
+						   String authorLast, String telephone,String bio,String street, String city, String state, String zip) {
+		List<Author> authorsnew = new ArrayList<>();
+		Address address = new Address(street, city, state, zip);
+		Author author = new Author(authorFirst, authorLast,telephone,address,bio);
+		authorsnew.add(author);
+		Book book = new Book(isbn,title,Integer.valueOf(maxCheckoutLength),authorsnew);
 		System.out.println(book);
 		DataAccessFacade dataAccessFacade = new DataAccessFacade();
 		dataAccessFacade.saveNewBook(book);
