@@ -118,6 +118,13 @@ public class SystemController implements ControllerInterface {
 		}
 	}
 
+	@Override
+	public Book getBookById(String isbn) {
+		DataAccessFacade dataAccessFacade = new DataAccessFacade();
+		HashMap<String, Book> hashMap= dataAccessFacade.readBooksMap();
+		return hashMap.get(isbn);
+	}
+
 
 	public void addNewBook(String isbn, String title, String maxCheckoutLength, String authorFirst,
 						   String authorLast, String telephone,String bio,String street, String city, String state, String zip) {
@@ -208,7 +215,8 @@ public class SystemController implements ControllerInterface {
 	}
 
 
-
-
-
+	public void addCopyOfBookToCollection(Book book){
+		DataAccessFacade dataAccessFacade = new DataAccessFacade();
+		dataAccessFacade.saveNewBook(book);
+	}
 }
