@@ -3,6 +3,7 @@ package ui;
 import business.Book;
 import business.ControllerInterface;
 import business.SystemController;
+import dataaccess.User;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -13,16 +14,18 @@ class ListUserPanel extends JPanel {
     ControllerInterface ci = new SystemController();
 
     public ListUserPanel() {
-        add(new JLabel("List of All Books"));
-        List<Book> books = ci.allBooks();
-		Collections.sort(books, (b1, b2) -> b1.getIsbn().compareTo(b2.getIsbn()));
+        List<User> users = ci.allUsers();
 
-		String[] columnNames = {"ISBN", "Title", "Authors", "Max Checkout Length"};
+		String[] columnNames = {"Id", "Role","password"};
 		
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 
-		for (Book book : books) {
-			Object[] rowData = new Object[]{book.getIsbn(), book.getTitle(), book.getAuthors(), book.getMaxCheckoutLength()};
+		for (User user : users) {
+			Object[] rowData = new Object[]{
+					user.getId(),
+					user.getAuthorization(),
+					user.getPassword()
+			};
 			model.addRow(rowData);
 		}
 
