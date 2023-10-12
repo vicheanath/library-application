@@ -30,8 +30,8 @@ public class LibrarySystem extends JFrame {
             new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.ADMIN, Auth.BOTH)),
             new LMenu("Add New Book", new AddNewBookPanel() ,List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("Add Member", new AddMemberPanel(), List.of(Auth.ADMIN, Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("List All Members", new ListAllBooksPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH))
-            // new LMenu("Check Out Book", new CheckOutBookPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH))
+            new LMenu("List All Members", new ListAllBooksPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
+            new LMenu("Check Out Book", new CheckoutBookPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH))
     );
     public LibrarySystem() {
         // Perform login
