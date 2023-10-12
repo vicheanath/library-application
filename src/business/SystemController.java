@@ -33,10 +33,10 @@ public class SystemController implements ControllerInterface {
 			throw new LoginException("Password incorrect");
 		}
 		currentAuth = map.get(id).getAuthorization();
-		LibrarySystem.hideAllWindows();
-		librarysystem.StarterPage.INSTANCE.init(currentAuth);
-		Util.centerFrameOnDesktop(librarysystem.StarterPage.INSTANCE);
-		librarysystem.StarterPage.INSTANCE.setVisible(true);
+		// LibrarySystem.hideAllWindows();
+		// librarysystem.StarterPage.INSTANCE.init(currentAuth);
+		// Util.centerFrameOnDesktop(librarysystem.StarterPage.INSTANCE);
+		// librarysystem.StarterPage.INSTANCE.setVisible(true);
 
 		
 	}
