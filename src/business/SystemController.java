@@ -90,7 +90,7 @@ public class SystemController implements ControllerInterface {
 	 * @param isbn
 	 */
 	@Override
-	public void checkoutBook(String memberId, String isbn) throws LibrarySystemException {
+	public void checkoutBook(String memberId, String isbn)  {
 		//TODO: implement checkoutBook
 		DataAccess da = new DataAccessFacade();
 		// 1. serach member by memberId
@@ -107,8 +107,14 @@ public class SystemController implements ControllerInterface {
 			LibraryMember member = da.searchMember(memberId);
 
 			member.checkOut(copy, LocalDate.now(), todayPlusCheckoutLength(maxCheckoutLength));
+
+			///////
+			da.saveNewMember(member);
+			//////
+
+
 		} else {
-			throw new LibrarySystemException("Book is not available");
+			throw new NullPointerException("Book is not available");
 		}
 	}
 
@@ -118,7 +124,6 @@ public class SystemController implements ControllerInterface {
 		HashMap<String, Book> hashMap= dataAccessFacade.readBooksMap();
 		return hashMap.get(isbn);
 	}
-
 
 
 	public void addNewBook(String isbn, String title, String maxCheckoutLength, String authorFirst,
