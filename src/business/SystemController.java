@@ -138,6 +138,28 @@ public class SystemController implements ControllerInterface {
 		dataAccessFacade.saveNewBook(book);
 	}
 
+	public void whetherBookCopyOverdue12(String memberId){
+		List<CheckoutRecordEntry> entries = new ArrayList<>();
+		SystemController systemController = new SystemController();
+		List<LibraryMember> memberList = systemController.allMembers();
+
+		for (LibraryMember member:memberList){
+			if (member.getRecord()==null){
+				continue;
+			}
+			if (member.getMemberId().equals(memberId)){
+				entries = member.getRecord().getCheckoutRecordEntries();
+				System.out.println(entries);
+				for (CheckoutRecordEntry entry:entries){
+					System.out.println(entry.getBookCopy().getBook().getTitle());
+					System.out.println(entry.getDueDate());
+					System.out.println(entry.getBookCopyId());
+				}
+			}
+		}
+	}
+
+
 
 
 	public void whetherBookCopyOverdue(String isbn){
@@ -204,14 +226,7 @@ public class SystemController implements ControllerInterface {
 		} catch (LibrarySystemException e) {
 			throw new RuntimeException(e);
 		}*/
-		for (LibraryMember member:memberList){
-			System.out.println(member);
-		}
-		for (Book book:bookList){
-			System.out.println(book);
-		}
-		systemController.testingCheckout();
-		systemController.whetherBookCopyOverdue("28-12331");
+		systemController.whetherBookCopyOverdue12("1001");
 	}
 
 
