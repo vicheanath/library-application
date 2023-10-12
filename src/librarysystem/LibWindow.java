@@ -1,5 +1,7 @@
 package librarysystem;
 
+import dataaccess.Auth;
+
 public interface LibWindow {
 	void init();
 	boolean isInitialized();
