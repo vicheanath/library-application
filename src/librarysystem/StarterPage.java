@@ -186,7 +186,6 @@ public class StarterPage extends JFrame implements LibWindow {
         });
         */
 
-
         linkList3.addListSelectionListener(event -> {
             List<String> adminRightsList = new ArrayList<>(Arrays.asList(adminRights));
             List<String> librarianRightsList = new ArrayList<>(Arrays.asList(librarian));

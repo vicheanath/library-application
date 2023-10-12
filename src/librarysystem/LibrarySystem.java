@@ -10,14 +10,18 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 
 import business.ControllerInterface;
 import business.SystemController;
@@ -63,8 +67,48 @@ public class LibrarySystem extends JFrame implements LibWindow {
 	}
      
     private LibrarySystem() {}
+
+	private boolean performLogin() {
+        JPanel panel = new JPanel();
+        JLabel userLabel = new JLabel("Username:");
+        JLabel passwordLabel = new JLabel("Password:");
+        JTextField userText = new JTextField(20);
+        JPasswordField passwordText = new JPasswordField(20);
+        JButton loginButton = new JButton("Login");
+
+        panel.setLayout(new GridLayout(3, 2));
+        panel.add(userLabel);
+        panel.add(userText);
+        panel.add(passwordLabel);
+        panel.add(passwordText);
+
+        int result = JOptionPane.showConfirmDialog(null, panel, "Login", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            // Check username and password (dummy check for demo purposes)
+            String username = userText.getText();
+            char[] password = passwordText.getPassword();
+
+            // Replace the following condition with your actual authentication logic
+            if ("admin".equals(username) && "adminpass".equals(new String(password))) {
+                return true; // Authentication successful
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid username or password. Please try again.");
+                return false; // Authentication failed
+            }
+        } else {
+            return false; // User clicked Cancel
+        }
+    }
+
     
     public void init() {
+
+		if (!performLogin()) {
+            JOptionPane.showMessageDialog(this, "Authentication failed. Exiting.");
+            System.exit(0);
+        }
+
+
     	formatContentPane();
     	setPathToImage();
     	insertSplashImage();
@@ -197,11 +241,12 @@ public class LibrarySystem extends JFrame implements LibWindow {
 			
 			List<String> ids = ci.allMemberIds();
 			Collections.sort(ids);
+
 			StringBuilder sb = new StringBuilder();
 			for(String s: ids) {
 				sb.append(s + "\n");
 			}
-			System.out.println(sb.toString());
+
 			AllMemberIdsWindow.INSTANCE.setData(sb.toString());
 			AllMemberIdsWindow.INSTANCE.pack();
 			AllMemberIdsWindow.INSTANCE.setSize(660,500);
