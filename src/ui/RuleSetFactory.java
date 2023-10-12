@@ -11,6 +11,7 @@ final public class RuleSetFactory {
 	static HashMap<Class<? extends JComponent>, RuleSet> map = new HashMap<>();
 	static {
 		map.put(AddMemberPanel.class, new MemberRuleSet());
+		map.put(AddNewBookPanel.class, new BookRuleSet());
 	}
 	public static RuleSet getRuleSet(JComponent c) {
 		Class<? extends JComponent> cl = c.getClass();
