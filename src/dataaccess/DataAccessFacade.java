@@ -126,7 +126,7 @@ public class DataAccessFacade implements DataAccess {
 		String OUTPUT_DIR ;
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("win")) {
-			OUTPUT_DIR = System.getProperty("user.dir")+ "\\src\\dataaccess\\storage";
+			OUTPUT_DIR = System.getProperty("user.dir")+ "\\dataaccess\\storage";
 		} else if(os.contains("linux")) {
 			OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
 		}else {
@@ -156,7 +156,7 @@ public class DataAccessFacade implements DataAccess {
 		String OUTPUT_DIR ;
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("win")) {
-			OUTPUT_DIR = System.getProperty("user.dir")+ "\\src\\dataaccess\\storage";
+			OUTPUT_DIR = System.getProperty("user.dir")+ "\\dataaccess\\storage";
 		} else if(os.contains("linux")) {
 			OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
 		}else {
