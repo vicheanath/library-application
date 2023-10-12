@@ -24,7 +24,6 @@ class ListAllMemberPanel extends JPanel {
     ControllerInterface ci = new SystemController();
 
     public ListAllMemberPanel() {
-        add(new JLabel("List of All Members"));
         List<LibraryMember> members = ci.allMembers();
 
 		String[] col = {"Member ID", "First Name", "Last Name", "Telephone", "Street", "City", "State", "Zip"};

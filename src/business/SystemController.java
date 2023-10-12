@@ -146,12 +146,49 @@ public class SystemController implements ControllerInterface {
 	}
 
 
+	public LibraryMember getMemberId(String memberId) {
+		DataAccessFacade dataAccessFacade = new DataAccessFacade();
+		HashMap<String, LibraryMember> hashMap= dataAccessFacade.readMemberMap();
+		return hashMap.get(memberId);
+	}
+	public List<CheckoutRecordEntry>  getCheckOutRecordEntry(String memberId){
+		List<CheckoutRecordEntry> entries = new ArrayList<CheckoutRecordEntry>();
+		SystemController systemController = new SystemController();
+		List<LibraryMember> memberList = systemController.allMembers();
 
+		boolean isMember = false;
+		for (LibraryMember member: memberList) {
+			if (member.getMemberId().equals(memberId)) {
+				isMember = true;
+				continue;
+			}
+		}
+		if (!isMember) {
+			throw new NullPointerException("Member is not available");
+		}
+
+		for (LibraryMember member:memberList){
+			if (member.getRecord()==null){
+				continue;
+			}
+			if (member.getMemberId().equals(memberId)){
+				entries = member.getRecord().getCheckoutRecordEntries();
+			}
+		}
+		return entries;
+	}
 
 	public List<BookDueDate> getListBookCopyOverdue(String isbn){
        SystemController systemController = new SystemController();
        List<LibraryMember> memberList = systemController.allMembers();
+
+
 	   List<BookDueDate> bookDueDates = new ArrayList<>();
+	   List<Book> bookList = systemController.allBooks();
+	   if(!bookList.contains(systemController.getBookById(isbn))){
+		   	   	throw new NullPointerException("Book is not available");
+	   }
+
        for (LibraryMember member:memberList){
 		   if (member.getRecord()==null){
 			   continue;
@@ -159,6 +196,7 @@ public class SystemController implements ControllerInterface {
 		   CheckoutRecord checkoutRecords = member.getRecord();
 
 		   List<CheckoutRecordEntry> checkoutRecordEntries = checkoutRecords.getCheckoutRecordEntries();
+
 
            for (CheckoutRecordEntry entry:checkoutRecordEntries) {
 			   if (entry.getDueDate().isAfter(LocalDate.now())) {
@@ -173,9 +211,11 @@ public class SystemController implements ControllerInterface {
 					   bookDueDates.add(bookDueDate);
 
 				   }
+
 			   }
 		   }
        }
+
 	   return  bookDueDates;
    }
 
@@ -193,6 +233,7 @@ public class SystemController implements ControllerInterface {
 		} catch (LibrarySystemException e) {
 			throw new RuntimeException(e);
 		}*/
+
 		for (LibraryMember member:memberList12){
 			System.out.println(member);
 		}
@@ -201,6 +242,9 @@ public class SystemController implements ControllerInterface {
 		}
 //		systemController.testingCheckout();
 		System.out.println(systemController.getListBookCopyOverdue("23-11451"));
+
+//		systemController.whetherBookCopyOverdue12("1008");
+
 	}
 
 

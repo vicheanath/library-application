@@ -1,40 +1,36 @@
 package ui;
 
-import business.Book;
 import business.BookDueDate;
+import business.CheckoutRecordEntry;
 import business.ControllerInterface;
 import business.SystemController;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.List;
 
-public class ListOverDueBookPanel extends JPanel {
+public class ListCheckOutRecordEntryPanel extends JPanel {
 
     ControllerInterface ci = new SystemController();
 
     JButton submitButton;
-    JButton addToCollection;
-    JTextField isbnField;
-    JTextField copynumber;
+    JTextField memberIDField;
     JTable table;
     DefaultTableModel model; // Declare the model as a class member
     SystemController systemController = new SystemController();
-    List<BookDueDate> bookDueDateList;
+    List<CheckoutRecordEntry> checkoutRecordEntries;
     JPanel topPanel = new JPanel(new BorderLayout());
     JPanel insideTopPanel;
     JPanel BottomPanel;
     JPanel lookup;
     JLabel jLabel;
     JPanel main = new JPanel(new BorderLayout());
-    public ListOverDueBookPanel() {
-        model = new DefaultTableModel(new Object[][]{}, new String[]{"ISBN", "Title", "Copy Number", "First Name", "Due Date"});
+    public ListCheckOutRecordEntryPanel() {
+        model = new DefaultTableModel(new Object[][]{}, new String[]{"Book Copy" , "Due Date" });
         defineTopPanel();
         defineTopTable();
         defineBotPanel();
@@ -45,19 +41,19 @@ public class ListOverDueBookPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String isbn = isbnField.getText();
                 try{
-                    bookDueDateList = systemController.getListBookCopyOverdue(isbn);
-                    model.setRowCount(0);
-
-                    for (BookDueDate bookDueDate:bookDueDateList){
-                        model.addRow(new Object[]{bookDueDate.getIsbn(), bookDueDate.getTitle(), bookDueDate.getCopyNum(), bookDueDate.getFirstName(), bookDueDate.getDueDate()});
-                    }
-                    setColumnWidths(table);
-                }catch (Exception ex){
+                checkoutRecordEntries = systemController.getCheckOutRecordEntry(memberIDField.getText());
+                model.setRowCount(0);
+                for (CheckoutRecordEntry checkoutRecordEntry:checkoutRecordEntries){
+                    model.addRow(new Object[]{
+                            checkoutRecordEntry.getBookCopy().getBook().getTitle() + " - " + checkoutRecordEntry.getBookCopy().getBook().getIsbn() + " - " + checkoutRecordEntry.getBookCopy().getCopyNum(),
+                            checkoutRecordEntry.getDueDate(),
+                    });
+                }
+                setColumnWidths(table);
+                }catch (NullPointerException ex){
                     JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
-
             }
         });
 
@@ -65,11 +61,11 @@ public class ListOverDueBookPanel extends JPanel {
     }
     private void defineTopPanel(){
         submitButton = new JButton("🔍 Search");
-        jLabel = new JLabel("Please enter ISBN number : ");
-        isbnField = new JTextField(15);
+        jLabel = new JLabel("Please enter MemberID : ");
+        memberIDField = new JTextField(15);
         lookup = new JPanel(new FlowLayout());
         lookup.add(jLabel);
-        lookup.add(isbnField);
+        lookup.add(memberIDField);
         lookup.add(submitButton);
         insideTopPanel = new JPanel(new BorderLayout());
         insideTopPanel.add(lookup, BorderLayout.NORTH);
@@ -81,21 +77,15 @@ public class ListOverDueBookPanel extends JPanel {
         topPanel.add(insideTopPanel, BorderLayout.NORTH);
     }
     private void defineBotPanel(){
-        addToCollection = new JButton("Add copy to collection");
         jLabel = new JLabel("Please enter number of copy : ");
-        copynumber = new JTextField(15);
+
         BottomPanel = new JPanel(new FlowLayout());
         BottomPanel.add(jLabel);
-        BottomPanel.add(copynumber);
-        BottomPanel.add(addToCollection);
     }
     private void setColumnWidths(JTable table) {
         // Set the preferred width for each column
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(250); // ISBN
         columnModel.getColumn(1).setPreferredWidth(300); // Title
-        columnModel.getColumn(2).setPreferredWidth(400); // Authors
-        columnModel.getColumn(3).setPreferredWidth(150); // Max Checkout Length
-        columnModel.getColumn(4).setPreferredWidth(650); // Is copy available
     }
 }
