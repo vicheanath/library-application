@@ -102,10 +102,20 @@ public class SystemController implements ControllerInterface {
 			LibraryMember member = da.searchMember(memberId);
 
 			member.checkOut(copy, LocalDate.now(), todayPlusCheckoutLength(maxCheckoutLength));
+
+			///////
+			da.saveNewMember(member);
+			//////
+
+
 		} else {
 			throw new LibrarySystemException("Book is not available");
 		}
 	}
+
+
+
+
 
 
 
@@ -120,5 +130,76 @@ public class SystemController implements ControllerInterface {
 		DataAccessFacade dataAccessFacade = new DataAccessFacade();
 		dataAccessFacade.saveNewBook(book);
 	}
+
+
+
+	/////////
+
+	/*public void whetherBookCopyOverdue(String isbn, int bookCopyNum){
+		SystemController systemController = new SystemController();
+		List<LibraryMember> memberList = systemController.allMembers();
+
+		for (LibraryMember member:memberList){
+			for (CheckoutRecordEntry entry:member.getRecord().getCheckoutRecordEntries()){
+				if(entry.getDueDate().isBefore(LocalDate.now())){
+					if (entry.getBookCopy().getBook().getIsbn().equals(isbn) && entry.getBookCopy().getCopyNum()==bookCopyNum){
+						System.out.println(member.getFirstName());
+					}
+				}
+			}
+		}
+	}
+
+	*/
+	public void testingCheckout(){
+		SystemController systemController = new SystemController();
+		List<LibraryMember> memberList = systemController.allMembers();
+		for (LibraryMember member:memberList){
+			if (member.getRecord()==null){
+				continue;
+			}
+			for (CheckoutRecordEntry entry:member.getRecord().getCheckoutRecordEntries()){
+				System.out.println("Here");
+				System.out.println(entry.getBookCopy());
+				System.out.println(entry.getDueDate());
+			}
+		}
+	}
+
+
+	public static void main(String[] args) {
+		SystemController systemController = new SystemController();
+		// systemController.testingCheckout();
+		List<LibraryMember> memberList = systemController.allMembers();
+		List<Book> bookList = systemController.allBooks();
+		//memberList.get(2).checkOut(new BookCopy(bookList.get(0),1,true),LocalDate.parse("2023-10-11"),LocalDate.parse("2023-10-31"));
+		//(BookCopy copy, LocalDate checkoutDate, LocalDate toDayPlushCheckoutLength)
+		//(Book book, int copyNum, boolean isAvailable)
+		/*try {
+			systemController.checkoutBook("1001","28-12331");
+		} catch (LibrarySystemException e) {
+			throw new RuntimeException(e);
+		}*/
+		for (LibraryMember member:memberList){
+			System.out.println(member);
+		}
+		for (Book book:bookList){
+			System.out.println(book);
+		}
+		systemController.testingCheckout();
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+	//////
 
 }

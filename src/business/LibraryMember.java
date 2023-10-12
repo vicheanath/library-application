@@ -10,10 +10,20 @@ import dataaccess.DataAccessFacade;
 
 final public class LibraryMember extends Person implements Serializable {
 	private String memberId;
+	private CheckoutRecord record;
 	
 	public LibraryMember(String memberId, String fname, String lname, String tel,Address add) {
 		super(fname,lname, tel, add);
-		this.memberId = memberId;		
+		this.memberId = memberId;
+
+
+	}
+
+
+	public void createRecord(){
+		if (record == null){
+			this.record = new CheckoutRecord();
+		}
 	}
 	
 	
@@ -23,9 +33,9 @@ final public class LibraryMember extends Person implements Serializable {
 
 	public void checkOut(BookCopy copy, LocalDate checkoutDate, LocalDate toDayPlushCheckoutLength) {
 		if (copy.isAvailable()) {
+			this.createRecord();
 			copy.changeAvailability();
 			CheckoutRecordEntry entry = createEntry(copy, checkoutDate, toDayPlushCheckoutLength);
-			CheckoutRecord record = new CheckoutRecord();
 			record.addCheckoutRecordEntry(entry);
 		} else {
 			System.out.println("Book is not available");
@@ -34,6 +44,10 @@ final public class LibraryMember extends Person implements Serializable {
 
 	public CheckoutRecordEntry createEntry(BookCopy copy, LocalDate checkoutDate, LocalDate dueDate) {
 		return new CheckoutRecordEntry(copy, checkoutDate, dueDate);
+	}
+
+	public CheckoutRecord getRecord() {
+		return record;
 	}
 
 	public static String genId(List<LibraryMember> list){
