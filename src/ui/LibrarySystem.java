@@ -31,10 +31,11 @@ public class LibrarySystem extends JFrame {
             new LMenu("+ Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("+ Add New Book", new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("List All Members", new ListAllBooksPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("+ Add Member", new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("List All Members", new ListAllMemberPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("🧑‍ Add Member", new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN)),
             new LMenu("Users", new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("Check Out Book", new CheckoutBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
+            new LMenu("Check Out Book", new CheckoutBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("Check OverDue Book", new ListOverDueBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
     );
     public LibrarySystem() {
         // Perform login
