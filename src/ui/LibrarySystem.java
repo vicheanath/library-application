@@ -3,6 +3,7 @@ package ui;
 import javax.swing.*;
 import business.*;
 import dataaccess.Auth;
+import librarysystem.AddNewBook;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +28,8 @@ public class LibrarySystem extends JFrame {
     private JSplitPane splitPane;
 
     public List<LMenu> menus = List.of(
-            new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.ADMIN, Auth.BOTH)),
+            new LMenu("Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("Add New Book", new AddNewBookPanel() ,List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("Add Member", new AddMemberPanel(), List.of(Auth.ADMIN, Auth.BOTH,Auth.LIBRARIAN)),
             new LMenu("List All Members", new ListAllBooksPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
@@ -46,10 +48,8 @@ public class LibrarySystem extends JFrame {
         setTitle("Library System");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         createLeftPanel();
         createSplitPane();
-
         add(splitPane);
 
         setLocationRelativeTo(null);

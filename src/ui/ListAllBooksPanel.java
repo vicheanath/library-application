@@ -26,17 +26,13 @@ class ListAllBooksPanel extends JPanel {
         add(new JLabel("List of All Books"));
         List<Book> books = ci.allBooks();
 		Collections.sort(books, (b1, b2) -> b1.getIsbn().compareTo(b2.getIsbn()));
-
 		String[] columnNames = {"ISBN", "Title", "Authors", "Max Checkout Length"};
-		
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 
-		for (Book book : books) {
+		for (Book book : books																																																																																																																																																																																																																																																																																																																																																																																																																																					) {
 			Object[] rowData = new Object[]{book.getIsbn(), book.getTitle(), book.getAuthors(), book.getMaxCheckoutLength()};
 			model.addRow(rowData);
 		}
-
-
 		JTable table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);

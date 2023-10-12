@@ -19,5 +19,9 @@ public interface ControllerInterface {
 
 	public List<User> allUsers();
 	public void checkoutBook(String memberId, String isbn) throws LibrarySystemException;
+
+	public Book getBookById(String isbn);
+
+	public void addCopyOfBookToCollection(Book book);
 	
 }
