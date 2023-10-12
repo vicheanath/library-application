@@ -1,9 +1,9 @@
 package ui;
 
 import javax.swing.*;
-
-import business.SystemController;
+import business.*;
 import dataaccess.Auth;
+import librarysystem.AddNewBook;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -28,11 +28,11 @@ public class LibrarySystem extends JFrame {
     private JSplitPane splitPane;
 
     public List<LMenu> menus = List.of(
-            new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
-            new LMenu("Add New Book", new AddNewBookPanel() ,List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu("Add New Book", new AddNewBookPanel() ,List.of(Auth.ADMIN, Auth.BOTH)),
             new LMenu("Add Member", new AddMemberPanel(), List.of(Auth.ADMIN, Auth.BOTH)),
-            new LMenu("List All Members", new ListAllBooksPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
-            new LMenu("Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH))
+            new LMenu("List All Members", new ListAllMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
+            new LMenu("Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.ADMIN, Auth.BOTH))
     );
     public LibrarySystem() {
         // Perform login
@@ -44,10 +44,8 @@ public class LibrarySystem extends JFrame {
         setTitle("Library System");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         createLeftPanel();
         createSplitPane();
-
         add(splitPane);
 
         setLocationRelativeTo(null);
@@ -58,9 +56,12 @@ public class LibrarySystem extends JFrame {
         JPanel panel = new JPanel();
         JLabel userLabel = new JLabel("Username:");
         JLabel passwordLabel = new JLabel("Password:");
-        JTextField userText = new JTextField(20);
-        JPasswordField passwordText = new JPasswordField(20);
-        JButton loginButton = new JButton("Login");
+        JTextField userText = new JTextField(10);
+        userText.setMaximumSize(new Dimension(150, 30));
+        userText.setText("101");
+        JPasswordField passwordText = new JPasswordField(10);
+        passwordText.setMaximumSize(new Dimension(150, 30));
+        passwordText.setText("xyz");
 
         panel.setLayout(new GridLayout(3, 2));
         panel.add(userLabel);
@@ -90,16 +91,29 @@ public class LibrarySystem extends JFrame {
 
     private void createLeftPanel() {
         leftPanel = new JPanel();
+        JLabel label = new JLabel("Library System");
+
+
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setAlignmentY(Component.CENTER_ALIGNMENT);
+        label.setMaximumSize(new Dimension(150, 50));
+        label.setForeground(Color.BLUE);
+
+        leftPanel.add(label);
+
+
+        leftPanel.setBackground(Color.LIGHT_GRAY);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-
-        // JButton listAllBooksButton = new JButton("List All Books" + SystemController.currentAuth);
-        // JButton listAllMember = new JButton("List All Members");
-        // JButton addNewBookButton = new JButton("Add New Book");
-        // JButton addMemberButton = new JButton("Add Member");
-
         for (LMenu menu : menus) {
             if (menu.roles.contains(SystemController.currentAuth)) {
                 JButton button = new JButton(menu.name);
+                button.setMaximumSize(new Dimension(150, 40));
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.setAlignmentY(Component.CENTER_ALIGNMENT);
+                button.setFont(new Font("Arial", Font.PLAIN, 14));
+                button.setForeground(Color.BLACK);
+                button.setBackground(Color.WHITE);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -110,47 +124,11 @@ public class LibrarySystem extends JFrame {
             }
         }
 
-
-        // listAllBooksButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         showPanel(new ListAllBooksPanel());
-        //     }
-        // });
-
-        
-        // addNewBookButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         showPanel(new AddNewBookPanel());
-        //     }
-        // });
-
-        
-        // addMemberButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         showPanel(new AddMemberPanel());
-        //     }
-        // });
-
-        
-        // listAllMember.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         showPanel(new ListAllMemberPanel());
-        //     }
-        // });
-
-        // leftPanel.add(listAllBooksButton);
-        // leftPanel.add(addNewBookButton);
-        // leftPanel.add(addMemberButton);
-        // leftPanel.add(listAllMember);
     }
 
     private void createSplitPane() {
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, new JPanel());
-        splitPane.setDividerLocation(150);
+        splitPane.setDividerLocation(160);
         splitPane.setEnabled(false); // Disable resizing
     }
 
