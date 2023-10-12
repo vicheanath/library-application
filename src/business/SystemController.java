@@ -9,9 +9,18 @@ import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
+import librarysystem.*;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
+	private static LibWindow[] allWindows = {
+			LibrarySystem.INSTANCE,
+			LoginWindow.INSTANCE,
+			AllMemberIdsWindow.INSTANCE,
+			librarysystem.StarterPage.INSTANCE,
+			AllBookIdsWindow.INSTANCE,
+			librarysystem.AddNewMember.INSTANCE
+	};
 	
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();
@@ -24,6 +33,11 @@ public class SystemController implements ControllerInterface {
 			throw new LoginException("Password incorrect");
 		}
 		currentAuth = map.get(id).getAuthorization();
+		LibrarySystem.hideAllWindows();
+		librarysystem.StarterPage.INSTANCE.init(currentAuth);
+		Util.centerFrameOnDesktop(librarysystem.StarterPage.INSTANCE);
+		librarysystem.StarterPage.INSTANCE.setVisible(true);
+
 		
 	}
 	@Override
@@ -92,4 +106,27 @@ public class SystemController implements ControllerInterface {
 			throw new LibrarySystemException("Book is not available");
 		}
 	}
+
+
+
+	//////Not yet Confirmed///////
+	public static void main(String[] args) {
+		SystemController controller = new SystemController();
+		//System.out.println(controller.allBooks());
+		System.out.println(controller.allBooks().size());
+		List<Author> authors = new ArrayList<>();
+		Address address = new Address("Iowa", "Iowa", "Iowa", "Iowa");
+		Author author = new Author("Collin", "Collin","Collin",address,"Iowa");
+		authors.add(author);
+		controller.addNewBook("12","Hello",7,authors);
+		System.out.println(controller.allBooks().size());
+
+	}
+	public void addNewBook(String isbn, String title, int maxCheckoutLength, List<Author> authors) {
+		Book book = new Book(isbn,title,maxCheckoutLength,authors);
+		System.out.println(book);
+		DataAccessFacade dataAccessFacade = new DataAccessFacade();
+		dataAccessFacade.saveNewBook(book);
+	}
+
 }

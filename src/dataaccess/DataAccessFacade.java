@@ -22,6 +22,22 @@ public class DataAccessFacade implements DataAccess {
 	enum StorageType {
 		BOOKS, MEMBERS, USERS;
 	}
+
+	/////////// NOT CHECKED//////////////////////
+	public void saveNewBook(Book book) {
+		HashMap<String, Book> mems = readBooksMap();
+		String isbn = book.getIsbn();
+		mems.put(isbn, book);
+		saveToStorage(StorageType.BOOKS, mems);
+	}
+
+
+
+	////////NOT CHECKED //////////////
+
+
+
+
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations
@@ -111,7 +127,9 @@ public class DataAccessFacade implements DataAccess {
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("win")) {
 			OUTPUT_DIR = System.getProperty("user.dir")+ "\\src\\dataaccess\\storage";
-		} else {
+		} else if(os.contains("linux")) {
+			OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
+		}else {
 			OUTPUT_DIR = System.getProperty("user.dir")+ "/src/dataaccess/storage";
 		}
 
@@ -139,7 +157,9 @@ public class DataAccessFacade implements DataAccess {
 		String os = System.getProperty("os.name").toLowerCase();
 		if (os.contains("win")) {
 			OUTPUT_DIR = System.getProperty("user.dir")+ "\\src\\dataaccess\\storage";
-		} else {
+		} else if(os.contains("linux")) {
+			OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
+		}else {
 			OUTPUT_DIR = System.getProperty("user.dir")+ "/src/dataaccess/storage";
 		}
 
