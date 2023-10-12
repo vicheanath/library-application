@@ -38,7 +38,7 @@ class AddMemberPanel extends JPanel {
         addField("Last Name:", lastNameField = createTextField(20));
         addField("Street:", streetField = createTextField(30));
         addField("City:", cityField = createTextField(20));
-        // addField("State:", stateField = createTextField(2));
+        addField("State:", stateField = createTextField(2));
         addField("ZIP:", zipField = createTextField(10));
         addField("Telephone Number:", phoneField = createTextField(12));
 

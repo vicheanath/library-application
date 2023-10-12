@@ -1,8 +1,7 @@
 package ui;
 
 import javax.swing.*;
-
-import business.SystemController;
+import business.*;
 import dataaccess.Auth;
 
 import java.awt.*;
@@ -59,8 +58,10 @@ public class LibrarySystem extends JFrame {
         JLabel userLabel = new JLabel("Username:");
         JLabel passwordLabel = new JLabel("Password:");
         JTextField userText = new JTextField(10);
+        userText.setMaximumSize(new Dimension(150, 30));
         userText.setText("101");
         JPasswordField passwordText = new JPasswordField(10);
+        passwordText.setMaximumSize(new Dimension(150, 30));
         passwordText.setText("xyz");
 
         panel.setLayout(new GridLayout(3, 2));
@@ -91,10 +92,29 @@ public class LibrarySystem extends JFrame {
 
     private void createLeftPanel() {
         leftPanel = new JPanel();
+        JLabel label = new JLabel("Library System");
+
+
+        label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setAlignmentY(Component.CENTER_ALIGNMENT);
+        label.setMaximumSize(new Dimension(150, 50));
+        label.setForeground(Color.BLUE);
+
+        leftPanel.add(label);
+
+
+        leftPanel.setBackground(Color.LIGHT_GRAY);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
         for (LMenu menu : menus) {
             if (menu.roles.contains(SystemController.currentAuth)) {
                 JButton button = new JButton(menu.name);
+                button.setMaximumSize(new Dimension(150, 40));
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.setAlignmentY(Component.CENTER_ALIGNMENT);
+                button.setFont(new Font("Arial", Font.PLAIN, 14));
+                button.setForeground(Color.BLACK);
+                button.setBackground(Color.WHITE);
                 button.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -109,7 +129,7 @@ public class LibrarySystem extends JFrame {
 
     private void createSplitPane() {
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, new JPanel());
-        splitPane.setDividerLocation(150);
+        splitPane.setDividerLocation(160);
         splitPane.setEnabled(false); // Disable resizing
     }
 
