@@ -23,19 +23,13 @@ public class DataAccessFacade implements DataAccess {
 		BOOKS, MEMBERS, USERS;
 	}
 
-	/////////// NOT CHECKED//////////////////////
 	public void saveNewBook(Book book) {
 		HashMap<String, Book> mems = readBooksMap();
 		String isbn = book.getIsbn();
 		mems.put(isbn, book);
 		saveToStorage(StorageType.BOOKS, mems);
 	}
-
-
-
-	////////NOT CHECKED //////////////
-
-
+	
 
 
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
