@@ -26,7 +26,6 @@ class CheckoutBookPanel extends JPanel {
     }
 
     private void initializeUI() {
-        setLayout(new GridLayout(10, 2));
         SystemController dataAccessFacade = new SystemController();
 
         List<LibraryMember> libraryMembers = dataAccessFacade.allMembers();
@@ -39,7 +38,7 @@ class CheckoutBookPanel extends JPanel {
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addNewMember();
+                performCheckOut();
             }
         });
 
@@ -61,15 +60,25 @@ class CheckoutBookPanel extends JPanel {
         return textField;
     }
 
-    private void addNewMember() {
+    private void performCheckOut() {
         SystemController systemController = new SystemController();
         try {
             RuleSet rules = RuleSetFactory.getRuleSet(this);
             rules.applyRules(this);
-            systemController.checkoutBook(
-                    memberIdField.getText(),
-                    bookIsbnField.getText()
-            );
+            try {
+                systemController.checkoutBook(
+                        memberIdField.getText(),
+                        bookIsbnField.getText()
+                );
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "Member ID or Book ISBN is not valid");
+                return;
+            }
+
+            JOptionPane.showMessageDialog(this, "Book + " + bookIsbnField.getText() + " has been checked out by " + memberIdField.getText());
+            memberIdField.setText("");
+            bookIsbnField.setText("");
+
         } catch(RuleException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
 
