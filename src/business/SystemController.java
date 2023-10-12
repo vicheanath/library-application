@@ -79,6 +79,13 @@ public class SystemController implements ControllerInterface {
 		retval.addAll(da.readMemberMap().values());
 		return retval;
 	}
+	@Override
+	public List<User> allUsers() {
+		DataAccess da = new DataAccessFacade();
+		List<User> retval = new ArrayList<>();
+		retval.addAll(da.readUserMap().values());
+		return retval;
+	}
 
 	public LocalDate todayPlusCheckoutLength(int maxCheckoutLength) {
 		return LocalDate.now().plusDays(maxCheckoutLength);
@@ -110,6 +117,9 @@ public class SystemController implements ControllerInterface {
 
 			///////
 			da.saveNewMember(member);
+			copy.setAvailable(false);
+			Book bookReturned = copy.getBook();
+
 			//////
 
 
@@ -139,62 +149,84 @@ public class SystemController implements ControllerInterface {
 	}
 
 
+	public LibraryMember getMemberId(String memberId) {
+		DataAccessFacade dataAccessFacade = new DataAccessFacade();
+		HashMap<String, LibraryMember> hashMap= dataAccessFacade.readMemberMap();
+		return hashMap.get(memberId);
+	}
+	public List<CheckoutRecordEntry>  getCheckOutRecordEntry(String memberId){
+		List<CheckoutRecordEntry> entries = new ArrayList<CheckoutRecordEntry>();
+		SystemController systemController = new SystemController();
+		List<LibraryMember> memberList = systemController.allMembers();
 
-	public void whetherBookCopyOverdue(String isbn){
-		List<List<String>> bookDetails = new ArrayList<>();
+		boolean isMember = false;
+		for (LibraryMember member: memberList) {
+			if (member.getMemberId().equals(memberId)) {
+				isMember = true;
+				continue;
+			}
+		}
+		if (!isMember) {
+			throw new NullPointerException("Member is not available");
+		}
+
+		for (LibraryMember member:memberList){
+			if (member.getRecord()==null){
+				continue;
+			}
+			if (member.getMemberId().equals(memberId)){
+				entries = member.getRecord().getCheckoutRecordEntries();
+			}
+		}
+		return entries;
+	}
+
+	public List<BookDueDate> getListBookCopyOverdue(String isbn){
        SystemController systemController = new SystemController();
        List<LibraryMember> memberList = systemController.allMembers();
+
+
+	   List<BookDueDate> bookDueDates = new ArrayList<>();
+	   List<Book> bookList = systemController.allBooks();
+	   if(!bookList.contains(systemController.getBookById(isbn))){
+		   	   	throw new NullPointerException("Book is not available");
+	   }
 
        for (LibraryMember member:memberList){
 		   if (member.getRecord()==null){
 			   continue;
 		   }
-           for (CheckoutRecordEntry entry:member.getRecord().getCheckoutRecordEntries()){
-               if(entry.getDueDate().isAfter(LocalDate.now())){
-                   if (entry.getBookCopy().getBook().getIsbn().equals(isbn)){
-                       //System.out.println(member.getFirstName());
-					   /*bookDetails.add(
-							   List.of(
-							   entry.getBookCopy().getBook().getIsbn(),
+		   CheckoutRecord checkoutRecords = member.getRecord();
+
+		   List<CheckoutRecordEntry> checkoutRecordEntries = checkoutRecords.getCheckoutRecordEntries();
+
+
+           for (CheckoutRecordEntry entry:checkoutRecordEntries) {
+			   if (entry.getDueDate().isAfter(LocalDate.now())) {
+				   Book book = entry.getBookCopy().getBook();
+				   if (book.getIsbn().equals(isbn)) {
+					   BookDueDate bookDueDate = new BookDueDate(entry.getBookCopy().getBook().getIsbn(),
 							   entry.getBookCopy().getBook().getTitle(),
 							   entry.getBookCopy().getCopyNum(),
 							   member.getFirstName(),
-							   entry.getDueDate()
-					   ));*/
-					   System.out.println("ISBN"+ entry.getBookCopy().getBook().getIsbn());
-					   System.out.println("Title" + entry.getBookCopy().getBook().getTitle());
-					   System.out.println("Copy" + entry.getBookCopy().getCopyNum());
-					   System.out.println("First" + member.getFirstName());
-					   System.out.println("Due Date" + entry.getDueDate());
+							   entry.getDueDate().toString());
 
-                   }
-               }
-           }
+					   bookDueDates.add(bookDueDate);
+
+				   }
+
+			   }
+		   }
        }
+
+	   return  bookDueDates;
    }
-
-
-	public void testingCheckout(){
-		SystemController systemController = new SystemController();
-		List<LibraryMember> memberList = systemController.allMembers();
-		for (LibraryMember member:memberList){
-			if (member.getRecord()==null){
-				continue;
-			}
-			for (CheckoutRecordEntry entry:member.getRecord().getCheckoutRecordEntries()){
-				System.out.println("Here");
-				System.out.println(entry.getBookCopy());
-				System.out.println(entry.getDueDate());
-				System.out.println(entry);
-			}
-		}
-	}
 
 
 	public static void main(String[] args) {
 		SystemController systemController = new SystemController();
 		// systemController.testingCheckout();
-		List<LibraryMember> memberList = systemController.allMembers();
+		List<LibraryMember> memberList12 = systemController.allMembers();
 		List<Book> bookList = systemController.allBooks();
 		//memberList.get(2).checkOut(new BookCopy(bookList.get(0),1,true),LocalDate.parse("2023-10-11"),LocalDate.parse("2023-10-31"));
 		//(BookCopy copy, LocalDate checkoutDate, LocalDate toDayPlushCheckoutLength)
@@ -204,19 +236,24 @@ public class SystemController implements ControllerInterface {
 		} catch (LibrarySystemException e) {
 			throw new RuntimeException(e);
 		}*/
-		for (LibraryMember member:memberList){
+
+		for (LibraryMember member:memberList12){
 			System.out.println(member);
 		}
 		for (Book book:bookList){
 			System.out.println(book);
 		}
-		systemController.testingCheckout();
-		systemController.whetherBookCopyOverdue("28-12331");
+//		systemController.testingCheckout();
+		System.out.println(systemController.getListBookCopyOverdue("23-11451"));
+
+//		systemController.whetherBookCopyOverdue12("1008");
+
 	}
 
 
-	public void addCopyOfBookToCollection(Book book){
-		DataAccessFacade dataAccessFacade = new DataAccessFacade();
-		dataAccessFacade.saveNewBook(book);
-	}
+		public void addCopyOfBookToCollection (Book book){
+			DataAccessFacade dataAccessFacade = new DataAccessFacade();
+			dataAccessFacade.saveNewBook(book);
+		}
+
 }

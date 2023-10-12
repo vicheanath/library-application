@@ -23,7 +23,6 @@ class ListAllBooksPanel extends JPanel {
     ControllerInterface ci = new SystemController();
 
     public ListAllBooksPanel() {
-        add(new JLabel("List of All Books"));
         List<Book> books = ci.allBooks();
 		Collections.sort(books, (b1, b2) -> b1.getIsbn().compareTo(b2.getIsbn()));
 		String[] columnNames = {"ISBN", "Title", "Authors", "Max Checkout Length"};

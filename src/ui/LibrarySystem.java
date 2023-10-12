@@ -28,19 +28,23 @@ public class LibrarySystem extends JFrame {
     private JSplitPane splitPane;
 
     public List<LMenu> menus = List.of(
-            new LMenu("Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("List all Books",new ListAllBooksPanel(), List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("Add new Book", new AddNewBookPanel() ,List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("Add member", new AddMemberPanel(), List.of(Auth.ADMIN, Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("List all members", new ListAllMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
-            new LMenu("Check out book", new CheckoutBookPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
-            new LMenu("Edit member", new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH))
+
+            new LMenu("Edit member", new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
+            new LMenu("+ Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu("+ Add New Book", new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu("List All Members", new ListAllMemberPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("🧑‍ Add Member", new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("Users", new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("Check Out Book", new CheckoutBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("Check OverDue Book", new ListOverDueBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("List Check Record", new ListCheckOutRecordEntryPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
     );
     public LibrarySystem() {
         // Perform login
         if (!performLogin()) {
-            JOptionPane.showMessageDialog(this, "Authentication failed. Exiting.");
-            System.exit(0);
+            dispose();
+            new LibrarySystem();
         }
 
         setTitle("Library System");
@@ -59,10 +63,11 @@ public class LibrarySystem extends JFrame {
         JLabel passwordLabel = new JLabel("Password:");
         JTextField userText = new JTextField(10);
         userText.setMaximumSize(new Dimension(150, 30));
-        userText.setText("101");
+
         JPasswordField passwordText = new JPasswordField(10);
         passwordText.setMaximumSize(new Dimension(150, 30));
-        passwordText.setText("xyz");
+//        userText.setText("101");
+//        passwordText.setText("xyz");
 
         panel.setLayout(new GridLayout(3, 2));
         panel.add(userLabel);
@@ -73,9 +78,13 @@ public class LibrarySystem extends JFrame {
         int result = JOptionPane.showConfirmDialog(null, panel, "Login", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
 
-            // Check username and password (dummy check for demo purposes)
             String username = userText.getText();
             char[] password = passwordText.getPassword();
+
+            if (username.isEmpty() || password.length == 0) {
+                JOptionPane.showMessageDialog(null, "Username or password cannot be empty");
+                return false;
+            }
 
             try {
                 SystemController dataAccessFacade = new SystemController();
@@ -124,6 +133,24 @@ public class LibrarySystem extends JFrame {
                 leftPanel.add(button);
             }
         }
+
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.setMaximumSize(new Dimension(150, 40));
+        logoutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logoutButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+        logoutButton.setFont(new Font("Arial", Font.PLAIN, 14));
+        logoutButton.setForeground(Color.BLACK);
+        logoutButton.setBackground(Color.WHITE);
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SystemController.currentAuth = null;
+                dispose();
+                new LibrarySystem();
+            }
+        });
+
+        leftPanel.add(logoutButton);
 
     }
 
