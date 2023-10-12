@@ -31,11 +31,9 @@ final public class Book implements Serializable {
 			BookCopy c = copies[i];
 			if(c.equals(copy)) {
 				copies[i] = copy;
-				
 			}
 		}
 	}
-
 	public List<Integer> getCopyNums() {
 		List<Integer> retVal = new ArrayList<>();
 		for(BookCopy c : copies) {
@@ -44,15 +42,12 @@ final public class Book implements Serializable {
 		return retVal;
 		
 	}
-	
 	public void addCopy() {
 		BookCopy[] newArr = new BookCopy[copies.length + 1];
 		System.arraycopy(copies, 0, newArr, 0, copies.length);
 		newArr[copies.length] = new BookCopy(this, copies.length +1, true);
 		copies = newArr;
 	}
-	
-	
 	@Override
 	public boolean equals(Object ob) {
 		if(ob == null) return false;

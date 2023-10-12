@@ -85,8 +85,6 @@ class AddMemberPanel extends JPanel {
         
         
     }
-
-
     public static final AddNewMember INSTANCE = new AddNewMember();
 
     
