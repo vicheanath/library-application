@@ -84,6 +84,11 @@ public class SystemController implements ControllerInterface {
 		return LocalDate.now().plusDays(maxCheckoutLength);
 	}
 
+	/*
+	 * checkoutBook
+	 * @param memberId
+	 * @param isbn
+	 */
 	@Override
 	public void checkoutBook(String memberId, String isbn) throws LibrarySystemException {
 		//TODO: implement checkoutBook

@@ -10,21 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class AddMemberContainer extends JFrame {
-
-    public AddMemberContainer() {
-        setTitle("Add Member Form");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setContentPane(new AddMemberPanel());
-        pack();
-        setLocationRelativeTo(null); // Center the frame on the screen
-        setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new AddMemberContainer());
-    }
-}
 
 class AddMemberPanel extends JPanel {
     private JTextField memberIdField;
@@ -85,6 +70,13 @@ class AddMemberPanel extends JPanel {
 
     private void addNewMember() {
         SystemController systemController = new SystemController();
+        try {
+				RuleSet rules = RuleSetFactory.getRuleSet(this);
+				rules.applyRules(this);
+			} catch(RuleException e) {
+				JOptionPane.showMessageDialog(this, e.getMessage()); 
+						
+			}
         systemController.AddNewMember(
                 memberIdField.getText(),
                 firstNameField.getText(),
@@ -98,4 +90,41 @@ class AddMemberPanel extends JPanel {
     }
 
     public static final AddNewMember INSTANCE = new AddNewMember();
+
+
+    public String getMemberIdField() {
+        return memberIdField.getText();
+    }
+
+    public String getFirstNameField() {
+        return firstNameField.getText();
+    }
+
+    public String getLastNameField() {
+        return lastNameField.getText();
+    }
+
+    public String getStreetField() {
+        return streetField.getText();
+    }
+
+    public String getCityField() {
+        return cityField.getText();
+    }
+
+    public String getStateField() {
+        return stateField.getText();
+    }
+
+    public String getZipField() {
+        return zipField.getText();
+    }
+
+    public String getPhoneField() {
+        return phoneField.getText();
+    }
+
+    public JButton getSubmitButton() {
+        return submitButton;
+    }
 }
