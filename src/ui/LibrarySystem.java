@@ -28,6 +28,8 @@ public class LibrarySystem extends JFrame {
     private JSplitPane splitPane;
 
     public List<LMenu> menus = List.of(
+
+            new LMenu("Edit member", new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
             new LMenu("+ Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("+ Add New Book", new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
@@ -51,7 +53,6 @@ public class LibrarySystem extends JFrame {
         createLeftPanel();
         createSplitPane();
         add(splitPane);
-
         setLocationRelativeTo(null);
         setVisible(true);
     }
