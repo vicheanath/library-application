@@ -125,7 +125,7 @@ public class DataAccessFacade implements DataAccess {
 		} else if(os.contains("linux")) {
 			OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
 		}else {
-			OUTPUT_DIR = System.getProperty("user.dir")+ "/src/dataaccess/storage";
+			OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
 		}
 
 		ObjectOutputStream out = null;
@@ -155,7 +155,7 @@ public class DataAccessFacade implements DataAccess {
 		} else if(os.contains("linux")) {
 			OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
 		}else {
-			OUTPUT_DIR = System.getProperty("user.dir")+ "/src/dataaccess/storage";
+			OUTPUT_DIR = System.getProperty("user.dir")+ "/dataaccess/storage";
 		}
 
 		ObjectInputStream in = null;
