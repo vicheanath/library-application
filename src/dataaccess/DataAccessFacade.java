@@ -29,9 +29,6 @@ public class DataAccessFacade implements DataAccess {
 		mems.put(isbn, book);
 		saveToStorage(StorageType.BOOKS, mems);
 	}
-	
-
-
 	public static final String DATE_PATTERN = "MM/dd/yyyy";
 	
 	//implement: other save operations

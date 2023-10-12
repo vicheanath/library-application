@@ -55,7 +55,16 @@ public class AddCopyBookToCollectionPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int numberOfCopy = Integer.parseInt(copynumber.getText());
-                systemController.addCopyOfBookToCollection(book.getCopy(numberOfCopy).getBook());
+                if(numberOfCopy > book.getNumCopies()){
+                    JOptionPane.showMessageDialog(null, "Number of copies cannot be less than the current number of copies.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    book.addCopy();
+                    systemController.addCopyOfBookToCollection(book);
+                    System.out.println(model.getRowCount());
+                    model.setValueAt(book.getNumCopies(), 0, 5);
+                    JOptionPane.showMessageDialog(null, "Copy of book added to the collection", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
         });
     }
