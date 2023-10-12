@@ -28,10 +28,11 @@ public class LibrarySystem extends JFrame {
     private JSplitPane splitPane;
 
     public List<LMenu> menus = List.of(
-            new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
+            new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.ADMIN, Auth.BOTH)),
             new LMenu("Add New Book", new AddNewBookPanel() ,List.of(Auth.ADMIN, Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("Add Member", new AddMemberPanel(), List.of(Auth.ADMIN, Auth.BOTH)),
+            new LMenu("Add Member", new AddMemberPanel(), List.of(Auth.ADMIN, Auth.BOTH,Auth.LIBRARIAN)),
             new LMenu("List All Members", new ListAllBooksPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH))
+            // new LMenu("Check Out Book", new CheckOutBookPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH))
     );
     public LibrarySystem() {
         // Perform login
@@ -57,9 +58,10 @@ public class LibrarySystem extends JFrame {
         JPanel panel = new JPanel();
         JLabel userLabel = new JLabel("Username:");
         JLabel passwordLabel = new JLabel("Password:");
-        JTextField userText = new JTextField(20);
-        JPasswordField passwordText = new JPasswordField(20);
-        JButton loginButton = new JButton("Login");
+        JTextField userText = new JTextField(10);
+        userText.setText("101");
+        JPasswordField passwordText = new JPasswordField(10);
+        passwordText.setText("xyz");
 
         panel.setLayout(new GridLayout(3, 2));
         panel.add(userLabel);
@@ -90,12 +92,6 @@ public class LibrarySystem extends JFrame {
     private void createLeftPanel() {
         leftPanel = new JPanel();
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-
-        // JButton listAllBooksButton = new JButton("List All Books" + SystemController.currentAuth);
-        // JButton listAllMember = new JButton("List All Members");
-        // JButton addNewBookButton = new JButton("Add New Book");
-        // JButton addMemberButton = new JButton("Add Member");
-
         for (LMenu menu : menus) {
             if (menu.roles.contains(SystemController.currentAuth)) {
                 JButton button = new JButton(menu.name);
@@ -109,42 +105,6 @@ public class LibrarySystem extends JFrame {
             }
         }
 
-
-        // listAllBooksButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         showPanel(new ListAllBooksPanel());
-        //     }
-        // });
-
-        
-        // addNewBookButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         showPanel(new AddNewBookPanel());
-        //     }
-        // });
-
-        
-        // addMemberButton.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         showPanel(new AddMemberPanel());
-        //     }
-        // });
-
-        
-        // listAllMember.addActionListener(new ActionListener() {
-        //     @Override
-        //     public void actionPerformed(ActionEvent e) {
-        //         showPanel(new ListAllMemberPanel());
-        //     }
-        // });
-
-        // leftPanel.add(listAllBooksButton);
-        // leftPanel.add(addNewBookButton);
-        // leftPanel.add(addMemberButton);
-        // leftPanel.add(listAllMember);
     }
 
     private void createSplitPane() {

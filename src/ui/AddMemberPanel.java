@@ -4,15 +4,12 @@ import business.LibraryMember;
 import business.SystemController;
 import librarysystem.AddNewMember;
 
-import java.awt.GridLayout;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 
 class AddMemberPanel extends JPanel {
     private JTextField memberIdField;
@@ -26,68 +23,108 @@ class AddMemberPanel extends JPanel {
     private JButton submitButton;
 
     public AddMemberPanel() {
-        // Implement the UI for adding a new member
-        // add(new JLabel("Add Member"));
+        initializeUI();
+    }
 
+    private void initializeUI() {
+        setLayout(new GridLayout(10, 2));
         SystemController dataAccessFacade = new SystemController();
 
         List<LibraryMember> libraryMembers = dataAccessFacade.allMembers();
-        setLayout(new GridLayout(9, 2));
-        // Labels and Text Fields
-        add(new JLabel("Member ID:"));
-        memberIdField = new JTextField(10);
-        memberIdField.setEditable(false);
+
+        addField("Member ID:", memberIdField = createNonEditableTextField(10));
         memberIdField.setText(LibraryMember.genId(libraryMembers));
-        add(memberIdField);
+        addField("First Name:", firstNameField = createTextField(20));
+        addField("Last Name:", lastNameField = createTextField(20));
+        addField("Street:", streetField = createTextField(30));
+        addField("City:", cityField = createTextField(20));
+        // addField("State:", stateField = createTextField(2));
+        addField("ZIP:", zipField = createTextField(10));
+        addField("Telephone Number:", phoneField = createTextField(12));
 
-
-        add(new JLabel("First Name:"));
-        firstNameField = new JTextField(20);
-        add(firstNameField);
-
-        add(new JLabel("Last Name:"));
-        lastNameField = new JTextField(20);
-        add(lastNameField);
-
-        add(new JLabel("Street:"));
-        streetField = new JTextField(30);
-        add(streetField);
-
-        add(new JLabel("City:"));
-        cityField = new JTextField(20);
-        add(cityField);
-
-        add(new JLabel("State:"));
-        stateField = new JTextField(2);
-        add(stateField);
-
-        add(new JLabel("ZIP:"));
-        zipField = new JTextField(10);
-        add(zipField);
-
-        add(new JLabel("Telephone Number:"));
-        phoneField = new JTextField(12);
-        add(phoneField);
-
-        // Submit Button
         submitButton = new JButton("Submit");
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SystemController systemController = new SystemController();
-                systemController.AddNewMember(memberIdField.getText(),firstNameField.getText(),
-                        lastNameField.getText(),streetField.getText(), cityField.getText(),
-                        stateField.getText(),zipField.getText(),phoneField.getText());
+                addNewMember();
             }
         });
 
         add(submitButton);
-        
-        
     }
 
+    private void addField(String label, JTextField textField) {
+        add(new JLabel(label));
+        add(textField);
+    }
+
+    private JTextField createTextField(int columns) {
+        return new JTextField(columns);
+    }
+
+    private JTextField createNonEditableTextField(int columns) {
+        JTextField textField = createTextField(columns);
+        textField.setEditable(false);
+        return textField;
+    }
+
+    private void addNewMember() {
+        SystemController systemController = new SystemController();
+        try {
+				RuleSet rules = RuleSetFactory.getRuleSet(this);
+				rules.applyRules(this);
+			} catch(RuleException e) {
+				JOptionPane.showMessageDialog(this, e.getMessage()); 
+						
+			}
+        systemController.AddNewMember(
+                memberIdField.getText(),
+                firstNameField.getText(),
+                lastNameField.getText(),
+                streetField.getText(),
+                cityField.getText(),
+                stateField.getText(),
+                zipField.getText(),
+                phoneField.getText()
+        );
+    }
 
     public static final AddNewMember INSTANCE = new AddNewMember();
 
-    
+
+    public String getMemberIdField() {
+        return memberIdField.getText();
+    }
+
+    public String getFirstNameField() {
+        return firstNameField.getText();
+    }
+
+    public String getLastNameField() {
+        return lastNameField.getText();
+    }
+
+    public String getStreetField() {
+        return streetField.getText();
+    }
+
+    public String getCityField() {
+        return cityField.getText();
+    }
+
+    public String getStateField() {
+        return stateField.getText();
+    }
+
+    public String getZipField() {
+        return zipField.getText();
+    }
+
+    public String getPhoneField() {
+        return phoneField.getText();
+    }
+
+    public JButton getSubmitButton() {
+        return submitButton;
+    }
 }
