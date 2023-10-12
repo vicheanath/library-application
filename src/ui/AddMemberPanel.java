@@ -88,7 +88,6 @@ class AddMemberPanel extends JPanel {
                 phoneField.getText()
         );
     }
-
     public static final AddNewMember INSTANCE = new AddNewMember();
 
 
