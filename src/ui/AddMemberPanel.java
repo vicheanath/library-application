@@ -21,17 +21,17 @@ class AddMemberPanel extends JPanel implements IPanel {
     private JTextField zipField;
     private JTextField phoneField;
     private JButton submitButton;
+    private JPanel memberData = new JPanel();
+    private JPanel main = new JPanel(new BorderLayout());
+
+    private JPanel memberLookup;
 
     public AddMemberPanel() {
         initializeUI();
     }
 
     private void initializeUI() {
-        setBorder(BorderFactory.createEmptyBorder( 5, 5, 5, 5));
-
-        GridLayout layout = new GridLayout(0, 2);
-        layout.setVgap(5);
-        setLayout(layout);
+        memberData.setLayout(new GridLayout(20,2));
         SystemController dataAccessFacade = new SystemController();
 
         List<LibraryMember> libraryMembers = dataAccessFacade.allMembers();
@@ -46,7 +46,10 @@ class AddMemberPanel extends JPanel implements IPanel {
         addField("ZIP:", zipField = createTextField(10));
         addField("Telephone Number:", phoneField = createTextField(12));
 
+
+
         submitButton = new JButton("Submit");
+
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,12 +57,15 @@ class AddMemberPanel extends JPanel implements IPanel {
             }
         });
 
-        add(submitButton);
+        main.add(memberData, BorderLayout.CENTER);
+        main.add(submitButton, BorderLayout.SOUTH);
+
+        add(main);
     }
 
     private void addField(String label, JTextField textField) {
-        add(new JLabel(label));
-        add(textField);
+        memberData.add(new JLabel(label));
+        memberData.add(textField);
     }
 
     private JTextField createTextField(int columns) {

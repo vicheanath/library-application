@@ -58,6 +58,7 @@ class EditMemberPanel extends JPanel implements IPanel{
         addField("State:", stateField = createTextField(2));
         addField("ZIP:", zipField = createTextField(10));
         addField("Telephone Number:", phoneField = createTextField(12));
+
         submitButton = new JButton("Submit");
         main.add(submitButton,BorderLayout.SOUTH);
         main.add(memberData,BorderLayout.CENTER);
