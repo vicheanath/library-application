@@ -2,7 +2,6 @@ package ui;
 
 import business.LibraryMember;
 import business.SystemController;
-import librarysystem.AddNewMember;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,6 +50,7 @@ class EditMemberPanel extends JPanel {
 
         memberData.setLayout(new GridLayout(0,2));
         addField("Member ID:", memberIdField = createTextField(10));
+        memberIdField.setEditable(false);
         addField("First Name:", firstNameField = createTextField(20));
         addField("Last Name:", lastNameField = createTextField(20));
         addField("Street:", streetField = createTextField(20));
@@ -95,25 +95,47 @@ class EditMemberPanel extends JPanel {
         if(!Objects.equals(firstNameField.getText(), libraryMember.getFirstName())){
                     libraryMember.setFirstName(firstNameField.getText());
                 }
-                if(!Objects.equals(lastNameField.getText(), libraryMember.getLastName())){
+        if(!Objects.equals(lastNameField.getText(), libraryMember.getLastName())){
                     libraryMember.setLastName(lastNameField.getText());
                 }
-                if(!Objects.equals(streetField.getText(), libraryMember.getAddress().getStreet())){
+        if(!Objects.equals(streetField.getText(), libraryMember.getAddress().getStreet())){
                     libraryMember.getAddress().setStreet(streetField.getText());
                 }
-                if(!Objects.equals(cityField.getText(), libraryMember.getAddress().getCity())){
+        if(!Objects.equals(cityField.getText(), libraryMember.getAddress().getCity())){
                     libraryMember.getAddress().setCity(cityField.getText());
                 }
-                if(!Objects.equals(stateField.getText(), libraryMember.getAddress().getState())){
+        if(!Objects.equals(stateField.getText(), libraryMember.getAddress().getState())){
                     libraryMember.getAddress().setState(stateField.getText());
                 }
-                if(!Objects.equals(zipField.getText(), libraryMember.getAddress().getZip())){
+        if(!Objects.equals(zipField.getText(), libraryMember.getAddress().getZip())){
                     libraryMember.getAddress().setZip(zipField.getText());
                 }
-                if(!Objects.equals(phoneField.getText(), libraryMember.getTelephone())){
+        if(!Objects.equals(phoneField.getText(), libraryMember.getTelephone())){
                     libraryMember.setTelephone(phoneField.getText());
                 }
+        try {
+//            RuleSet rules = RuleSetFactory.getRuleSet(this);
+//            rules.applyRules(this);
+            systemController.AddNewMember(
+                    libraryMember.getMemberId(),
+                    libraryMember.getFirstName(),
+                    libraryMember.getLastName(),
+                    libraryMember.getAddress().getStreet(),
+                    libraryMember.getAddress().getCity(),
+                    libraryMember.getAddress().getState(),
+                    libraryMember.getAddress().getZip(),
+                    libraryMember.getTelephone()
+            );
+            JOptionPane.showMessageDialog(this, "Member Updated Successfully" , "Success", JOptionPane.INFORMATION_MESSAGE);
+        } catch(NullPointerException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage() , "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+
+
     }
+
     private void addField(String label, JTextField textField){
         memberData.add(new JLabel(label));
         memberData.add(textField);
@@ -127,5 +149,37 @@ class EditMemberPanel extends JPanel {
         JTextField textField = createTextField(columns);
         textField.setEditable(false);
         return textField;
+    }
+
+    public String getMemberIdField() {
+        return memberIdField.getText();
+    }
+
+    public String getFirstNameField() {
+        return firstNameField.getText();
+    }
+
+    public String getLastNameField() {
+        return lastNameField.getText();
+    }
+
+    public String getStreetField() {
+        return streetField.getText();
+    }
+
+    public String getCityField() {
+        return cityField.getText();
+    }
+
+    public String getStateField() {
+        return stateField.getText();
+    }
+
+    public String getZipField() {
+        return zipField.getText();
+    }
+
+    public String getPhoneField() {
+        return phoneField.getText();
     }
 }

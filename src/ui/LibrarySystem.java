@@ -21,25 +21,27 @@ class LMenu {
         this.panel = panel;
     }
 }
-
 public class LibrarySystem extends JFrame {
 
     private JPanel leftPanel;
     private JSplitPane splitPane;
 
     public List<LMenu> menus = List.of(
-
-            new LMenu("Edit member", new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
-            new LMenu("+ Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("+ Add New Book", new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("List All Members", new ListAllMemberPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("🧑‍ Add Member", new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("Users", new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("Add New Book", new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu("Check Out Book", new CheckoutBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
             new LMenu("Check OverDue Book", new ListOverDueBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("List Check Record", new ListCheckOutRecordEntryPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
+            new LMenu("List Check Record", new ListCheckOutRecordEntryPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu("List All Members", new ListAllMemberPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("Edit member", new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
+            new LMenu("Add Member", new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu("Users", new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
+
     );
+
+
+
     public LibrarySystem() {
         // Perform login
         if (!performLogin()) {
@@ -48,7 +50,7 @@ public class LibrarySystem extends JFrame {
         }
 
         setTitle("Library System");
-        setSize(800, 600);
+        setSize(800, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         createLeftPanel();
         createSplitPane();
@@ -66,8 +68,8 @@ public class LibrarySystem extends JFrame {
 
         JPasswordField passwordText = new JPasswordField(10);
         passwordText.setMaximumSize(new Dimension(150, 30));
-//        userText.setText("101");
-//        passwordText.setText("xyz");
+        userText.setText("101");
+        passwordText.setText("xyz");
 
         panel.setLayout(new GridLayout(3, 2));
         panel.add(userLabel);
@@ -115,23 +117,25 @@ public class LibrarySystem extends JFrame {
 
         leftPanel.setBackground(Color.LIGHT_GRAY);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-        for (LMenu menu : menus) {
-            if (menu.roles.contains(SystemController.currentAuth)) {
-                JButton button = new JButton(menu.name);
-                button.setMaximumSize(new Dimension(150, 40));
-                button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                button.setAlignmentY(Component.CENTER_ALIGNMENT);
-                button.setFont(new Font("Arial", Font.PLAIN, 14));
-                button.setForeground(Color.BLACK);
-                button.setBackground(Color.WHITE);
-                button.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        showPanel(menu.panel);
-                    }
-                });
-                leftPanel.add(button);
-            }
+            for (LMenu m : menus) {
+                if (m.roles.contains(SystemController.currentAuth)) {
+                    JButton button = new JButton(m.name);
+                    button.setMaximumSize(new Dimension(150, 40));
+                    button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                    button.setAlignmentY(Component.CENTER_ALIGNMENT);
+                    button.setFont(new Font("Arial", Font.PLAIN, 14));
+
+                    button.setForeground(Color.BLACK);
+                    button.setBackground(Color.WHITE);
+                    button.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            showPanel(m.panel);
+                        }
+                    });
+                    leftPanel.add(button);
+                }
+
         }
 
         JButton logoutButton = new JButton("Logout");

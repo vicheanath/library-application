@@ -66,6 +66,14 @@ final public class Book implements Serializable {
 				     .map(l -> l.isAvailable())
 				     .reduce(false, (x,y) -> x || y);
 	}
+
+	public String toStringAllAuther() {
+		String allAuther = "";
+		for (Author author : authors) {
+			allAuther += author.getFirstName() + " " + author.getLastName() + ", ";
+		}
+		return allAuther;
+	}
 	@Override
 	public String toString() {
 		return "isbn: " + isbn + ", bookTitle: "+title+", maxLength: " + maxCheckoutLength + ", available: " + isAvailable();

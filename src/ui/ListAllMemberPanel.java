@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import business.Book;
 import business.ControllerInterface;
@@ -37,6 +38,28 @@ class ListAllMemberPanel extends JPanel {
 		JTable table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
+		table.setFillsViewportHeight(true);
+		table.setRowSelectionAllowed(true);
+		table.setColumnSelectionAllowed(false);
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		table.setRowHeight(30);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setEnabled(false);
+		setColumnWidths(table);
 		add(scrollPane);
     }
+
+	private void setColumnWidths(JTable table) {
+		// Set the preferred width for each column
+		TableColumnModel columnModel = table.getColumnModel();
+		columnModel.getColumn(0).setPreferredWidth(250); // Member ID
+		columnModel.getColumn(1).setPreferredWidth(300); // First Name
+		columnModel.getColumn(2).setPreferredWidth(500); // Last Name
+		columnModel.getColumn(3).setPreferredWidth(700);  // Telephone
+		columnModel.getColumn(4).setPreferredWidth(900);  // Street
+		columnModel.getColumn(5).setPreferredWidth(400);  // City
+		columnModel.getColumn(6).setPreferredWidth(200);  // State
+		columnModel.getColumn(7).setPreferredWidth(300);  // Zip
+
+	}
 }
