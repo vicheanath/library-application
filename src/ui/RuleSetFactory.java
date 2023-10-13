@@ -13,6 +13,7 @@ final public class RuleSetFactory {
 		map.put(AddMemberPanel.class, new MemberRuleSet());
 		map.put(AddNewBookPanel.class, new BookRuleSet());
 		map.put(CheckoutBookPanel.class, new CheckOutBookRuleSet());
+		map.put(EditMemberPanel.class, new MemberRuleSet());
 	}
 	public static RuleSet getRuleSet(JComponent c) {
 		Class<? extends JComponent> cl = c.getClass();

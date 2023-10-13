@@ -71,7 +71,7 @@ class CheckoutBookPanel extends JPanel {
                         bookIsbnField.getText()
                 );
             } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(this, "Member ID or Book ISBN is not valid");
+                JOptionPane.showMessageDialog(this, e.getMessage());
                 return;
             }
 

@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import business.Book;
 import business.ControllerInterface;
@@ -29,12 +30,34 @@ class ListAllBooksPanel extends JPanel {
 		DefaultTableModel model = new DefaultTableModel(null, columnNames);
 
 		for (Book book : books																																																																																																																																																																																																																																																																																																																																																																																																																																					) {
-			Object[] rowData = new Object[]{book.getIsbn(), book.getTitle(), book.getAuthors(), book.getMaxCheckoutLength()};
+			Object[] rowData = new Object[]{
+					book.getIsbn(), book.getTitle(),
+					book.toStringAllAuther(),
+
+					book.getMaxCheckoutLength()
+			};
 			model.addRow(rowData);
 		}
 		JTable table = new JTable(model);
 		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
+		table.setRowSelectionAllowed(true);
+		table.setColumnSelectionAllowed(false);
+		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		table.setRowHeight(30);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setEnabled(false);
+
 		add(scrollPane);
+		setColumnWidths(table);
     }
+
+	private void setColumnWidths(JTable table) {
+		// Set the preferred width for each column
+		TableColumnModel columnModel = table.getColumnModel();
+		columnModel.getColumn(0).setPreferredWidth(250); // ISBN
+		columnModel.getColumn(1).setPreferredWidth(300); // Title
+		columnModel.getColumn(2).setPreferredWidth(700); // Authors
+		columnModel.getColumn(3).setPreferredWidth(300); // Max Checkout Length
+	}
 }

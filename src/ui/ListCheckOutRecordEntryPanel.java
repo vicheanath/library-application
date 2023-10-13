@@ -74,7 +74,6 @@ public class ListCheckOutRecordEntryPanel extends JPanel {
         topPanel.add(insideTopPanel, BorderLayout.NORTH);
     }
     private void defineBotPanel(){
-        jLabel = new JLabel("Please enter number of copy : ");
 
         BottomPanel = new JPanel(new FlowLayout());
         BottomPanel.add(jLabel);

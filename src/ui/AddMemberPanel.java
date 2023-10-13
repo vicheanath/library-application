@@ -27,7 +27,11 @@ class AddMemberPanel extends JPanel {
     }
 
     private void initializeUI() {
-        setLayout(new GridLayout(10, 2));
+        setBorder(BorderFactory.createEmptyBorder( 5, 5, 5, 5));
+
+        GridLayout layout = new GridLayout(0, 2);
+        layout.setVgap(5);
+        setLayout(layout);
         SystemController dataAccessFacade = new SystemController();
 
         List<LibraryMember> libraryMembers = dataAccessFacade.allMembers();
@@ -73,20 +77,21 @@ class AddMemberPanel extends JPanel {
         try {
 				RuleSet rules = RuleSetFactory.getRuleSet(this);
 				rules.applyRules(this);
+                systemController.AddNewMember(
+                        memberIdField.getText(),
+                        firstNameField.getText(),
+                        lastNameField.getText(),
+                        streetField.getText(),
+                        cityField.getText(),
+                        stateField.getText(),
+                        zipField.getText(),
+                        phoneField.getText()
+                );
 			} catch(RuleException e) {
-				JOptionPane.showMessageDialog(this, e.getMessage()); 
+				JOptionPane.showMessageDialog(this, e.getMessage() , "Error", JOptionPane.ERROR_MESSAGE);
 						
 			}
-        systemController.AddNewMember(
-                memberIdField.getText(),
-                firstNameField.getText(),
-                lastNameField.getText(),
-                streetField.getText(),
-                cityField.getText(),
-                stateField.getText(),
-                zipField.getText(),
-                phoneField.getText()
-        );
+
     }
     public static final AddNewMember INSTANCE = new AddNewMember();
 
