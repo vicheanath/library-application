@@ -94,7 +94,7 @@ public class AddNewMember extends JPanel implements LibWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SystemController systemController = new SystemController();
-                systemController.AddNewMember(memberIdField.getText(),firstNameField.getText(),
+                systemController.addNewMember(memberIdField.getText(),firstNameField.getText(),
                         lastNameField.getText(),streetField.getText(), cityField.getText(),
                         stateField.getText(),zipField.getText(),phoneField.getText());
             }

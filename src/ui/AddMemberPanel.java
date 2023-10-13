@@ -77,7 +77,7 @@ class AddMemberPanel extends JPanel implements IPanel {
         try {
 				RuleSet rules = RuleSetFactory.getRuleSet(this);
 				rules.applyRules(this);
-                systemController.AddNewMember(
+                systemController.addNewMember(
                         memberIdField.getText(),
                         firstNameField.getText(),
                         lastNameField.getText(),

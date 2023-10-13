@@ -93,7 +93,7 @@ public class ListOverDueBookPanel extends JPanel implements IPanel{
         // Set the preferred width for each column
         TableColumnModel columnModel = table.getColumnModel();
         columnModel.getColumn(0).setPreferredWidth(250); // ISBN
-        columnModel.getColumn(1).setPreferredWidth(300); // Title
+        columnModel.getColumn(1).setPreferredWidth(700); // Title
         columnModel.getColumn(2).setPreferredWidth(400); // Authors
         columnModel.getColumn(3).setPreferredWidth(150); // Max Checkout Length
         columnModel.getColumn(4).setPreferredWidth(650); // Is copy available

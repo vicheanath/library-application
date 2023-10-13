@@ -1,14 +1,14 @@
 package ui;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 
 
-public class MemberRuleSet implements RuleSet {
-    private AddMemberPanel addMemberPanel;
+public class EditMemberRuleSet implements RuleSet {
+    private EditMemberPanel editMemberPanel;
 
 	@Override
 	public void applyRules(JComponent ob) throws RuleException {
-		addMemberPanel = (AddMemberPanel) ob;
+		editMemberPanel = (EditMemberPanel) ob;
 		nonemptyRule();
 		idNumericRule();
 		zipNumericRule();
@@ -17,21 +17,21 @@ public class MemberRuleSet implements RuleSet {
 	}
 
 	private void nonemptyRule() throws RuleException {
-		if(addMemberPanel.getMemberIdField().trim().isEmpty() ||
-				addMemberPanel.getFirstNameField().trim().isEmpty() ||
-				addMemberPanel.getLastNameField().trim().isEmpty() ||
-				addMemberPanel.getStreetField().trim().isEmpty() ||
-				addMemberPanel.getCityField().trim().isEmpty() ||
-				addMemberPanel.getStateField().trim().isEmpty() ||
-				addMemberPanel.getZipField().trim().isEmpty() ||
-				addMemberPanel.getPhoneField().trim().isEmpty()
+		if(editMemberPanel.getMemberIdField().trim().isEmpty() ||
+				editMemberPanel.getFirstNameField().trim().isEmpty() ||
+				editMemberPanel.getLastNameField().trim().isEmpty() ||
+				editMemberPanel.getStreetField().trim().isEmpty() ||
+				editMemberPanel.getCityField().trim().isEmpty() ||
+				editMemberPanel.getStateField().trim().isEmpty() ||
+				editMemberPanel.getZipField().trim().isEmpty() ||
+				editMemberPanel.getPhoneField().trim().isEmpty()
 				) {
 			throw new RuleException("All fields must be non-empty!");
 		}
 	}
 
 	private void idNumericRule() throws RuleException {
-		String val = addMemberPanel.getMemberIdField().trim();
+		String val = editMemberPanel.getMemberIdField().trim();
 		try {
 			Integer.parseInt(val);
 			//val is numeric
@@ -41,7 +41,7 @@ public class MemberRuleSet implements RuleSet {
 	}
 
 	private void zipNumericRule() throws RuleException {
-		String val = addMemberPanel.getZipField().trim();
+		String val = editMemberPanel.getZipField().trim();
 		try {
 			Integer.parseInt(val);
 			//val is numeric
@@ -52,7 +52,7 @@ public class MemberRuleSet implements RuleSet {
 	}
 
 	private void stateRule() throws RuleException {
-		String state = addMemberPanel.getStateField().trim();
+		String state = editMemberPanel.getStateField().trim();
 		if(state.length() != 2) throw new RuleException("State field must have two characters");
 		if(!Util.isInRangeAtoZ(state.charAt(0)) 
 				|| !Util.isInRangeAtoZ(state.charAt(1))) {
@@ -63,8 +63,8 @@ public class MemberRuleSet implements RuleSet {
 	
 
 	private void idNotZipRule() throws RuleException {
-		String zip = addMemberPanel.getZipField().trim();
-		String id = addMemberPanel.getMemberIdField().trim();
+		String zip = editMemberPanel.getZipField().trim();
+		String id = editMemberPanel.getMemberIdField().trim();
 		if(zip.equals(id)) throw new RuleException("ID may not be the same as zipcode");
 	}
 }

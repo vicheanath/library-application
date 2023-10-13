@@ -56,7 +56,7 @@ public class SystemController implements ControllerInterface {
 		return retval;
 	}
 	@Override
-	public void AddNewMember(String memberId, String fname, String lname, String street, String city, String state, String zip, String phone) {
+	public void addNewMember(String memberId, String fname, String lname, String street, String city, String state, String zip, String phone) {
 		Address address = new Address(street,city,state,zip);
 		System.out.println(memberId);
 		LibraryMember member = new LibraryMember(memberId,fname,lname,phone,address);
