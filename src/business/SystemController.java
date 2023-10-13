@@ -119,6 +119,7 @@ public class SystemController implements ControllerInterface {
 			da.saveNewMember(member);
 			copy.setAvailable(false);
 			Book bookReturned = copy.getBook();
+			da.saveNewBook(bookReturned);
 
 			//////
 
