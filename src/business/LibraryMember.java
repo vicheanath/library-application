@@ -1,5 +1,6 @@
 package business;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -58,7 +59,10 @@ final public class LibraryMember extends Person implements Serializable {
 		return String.valueOf(Integer.parseInt(lastId) + 1);
 	
 	}
-	
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
 	@Override
 	public String toString() {
 		return "Member Info: " + "ID: " + memberId + ", name: " + getFirstName() + " " + getLastName() + 

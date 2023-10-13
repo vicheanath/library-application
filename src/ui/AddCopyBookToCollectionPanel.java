@@ -45,7 +45,7 @@ public class AddCopyBookToCollectionPanel extends JPanel {
                 String isbn = isbnField.getText();
                 book = systemController.getBookById(isbn);
                 model.setRowCount(0); // Clear the existing table rows
-                String isCopyAvailable = book.isAvailable() ? "Copy is available" : "Copy is not available";
+                String isCopyAvailable = book.isAvailable() ? "Available" : "Not available";
                 model.addRow(new Object[]{book.getIsbn(), book.getTitle(), book.getAuthors(), book.getMaxCheckoutLength(), isCopyAvailable, book.getNumCopies()});
                 setColumnWidths(table);
             }
@@ -55,6 +55,10 @@ public class AddCopyBookToCollectionPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int numberOfCopy = Integer.parseInt(copynumber.getText());
+                if (!book.isAvailable()){
+                    JOptionPane.showMessageDialog(null, "Book is not available for copy.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 if(numberOfCopy > book.getNumCopies()){
                     JOptionPane.showMessageDialog(null, "Number of copies cannot be less than the current number of copies.", "Error", JOptionPane.ERROR_MESSAGE);
                 } else {

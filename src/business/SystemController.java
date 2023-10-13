@@ -115,9 +115,13 @@ public class SystemController implements ControllerInterface {
 
 			member.checkOut(copy, LocalDate.now(), todayPlusCheckoutLength(maxCheckoutLength));
 
-			///////
+
+
 			da.saveNewMember(member);
-			//////
+			copy.setAvailable(false);
+			Book bookReturned = copy.getBook();
+			da.saveNewBook(bookReturned);
+
 
 
 		} else {
@@ -151,8 +155,8 @@ public class SystemController implements ControllerInterface {
 		HashMap<String, LibraryMember> hashMap= dataAccessFacade.readMemberMap();
 		return hashMap.get(memberId);
 	}
-	public List<CheckoutRecordEntry>  getCheckOutRecordEntry(String memberId){
-		List<CheckoutRecordEntry> entries = new ArrayList<CheckoutRecordEntry>();
+	public List<CheckOutRecordAllMember>  getCheckOutRecordEntry(String memberId){
+		List<CheckOutRecordAllMember>  entries = new ArrayList<CheckOutRecordAllMember>();
 		SystemController systemController = new SystemController();
 		List<LibraryMember> memberList = systemController.allMembers();
 
@@ -172,11 +176,35 @@ public class SystemController implements ControllerInterface {
 				continue;
 			}
 			if (member.getMemberId().equals(memberId)){
-				entries = member.getRecord().getCheckoutRecordEntries();
+				List<CheckoutRecordEntry> entry = member.getRecord().getCheckoutRecordEntries();
+				for (CheckoutRecordEntry checkoutRecordEntry: entry){
+					entries.add(new CheckOutRecordAllMember(member, checkoutRecordEntry.getBookCopy(),checkoutRecordEntry.getDueDate()));
+				}
 			}
 		}
 		return entries;
 	}
+
+
+
+	public List<CheckOutRecordAllMember> getCheckOutRecordEntryAllMembers(){
+		List<CheckOutRecordAllMember>  entries = new ArrayList<CheckOutRecordAllMember>();
+		SystemController systemController = new SystemController();
+		List<LibraryMember> memberList = systemController.allMembers();
+
+		for (LibraryMember member:memberList){
+			if (member.getRecord()==null){
+				continue;
+			}
+			List<CheckoutRecordEntry> entry = member.getRecord().getCheckoutRecordEntries();
+			for (CheckoutRecordEntry checkoutRecordEntry: entry){
+				entries.add(new CheckOutRecordAllMember(member, checkoutRecordEntry.getBookCopy(),checkoutRecordEntry.getDueDate()));
+			}
+
+		}
+		return entries;
+	}
+
 
 	public List<BookDueDate> getListBookCopyOverdue(String isbn){
        SystemController systemController = new SystemController();
@@ -222,18 +250,7 @@ public class SystemController implements ControllerInterface {
 
 	public static void main(String[] args) {
 		SystemController systemController = new SystemController();
-		// systemController.testingCheckout();
-		List<LibraryMember> memberList12 = systemController.allMembers();
-		List<Book> bookList = systemController.allBooks();
-		//memberList.get(2).checkOut(new BookCopy(bookList.get(0),1,true),LocalDate.parse("2023-10-11"),LocalDate.parse("2023-10-31"));
-		//(BookCopy copy, LocalDate checkoutDate, LocalDate toDayPlushCheckoutLength)
-		//(Book book, int copyNum, boolean isAvailable)
-		/*try {
-			systemController.checkoutBook("1001","28-12331");
-		} catch (LibrarySystemException e) {
-			throw new RuntimeException(e);
-		}*/
-
+		/*
 		for (LibraryMember member:memberList12){
 			System.out.println(member);
 		}
@@ -243,7 +260,10 @@ public class SystemController implements ControllerInterface {
 //		systemController.testingCheckout();
 		System.out.println(systemController.getListBookCopyOverdue("23-11451"));
 
-//		systemController.whetherBookCopyOverdue12("1008");
+//		systemController.whetherBookCopyOverdue12("1008");*/
+		for (CheckOutRecordAllMember record :systemController.getCheckOutRecordEntryAllMembers()){
+			System.out.println(record);
+		}
 
 	}
 

@@ -1,9 +1,6 @@
 package ui;
 
-import business.BookDueDate;
-import business.CheckoutRecordEntry;
-import business.ControllerInterface;
-import business.SystemController;
+import business.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +19,7 @@ public class ListCheckOutRecordEntryPanel extends JPanel {
     JTable table;
     DefaultTableModel model; // Declare the model as a class member
     SystemController systemController = new SystemController();
-    List<CheckoutRecordEntry> checkoutRecordEntries;
+    List<CheckOutRecordAllMember> checkoutRecordEntries;
     JPanel topPanel = new JPanel(new BorderLayout());
     JPanel insideTopPanel;
     JPanel BottomPanel;
@@ -44,7 +41,7 @@ public class ListCheckOutRecordEntryPanel extends JPanel {
                 try{
                 checkoutRecordEntries = systemController.getCheckOutRecordEntry(memberIDField.getText());
                 model.setRowCount(0);
-                for (CheckoutRecordEntry checkoutRecordEntry:checkoutRecordEntries){
+                for (CheckOutRecordAllMember checkoutRecordEntry:checkoutRecordEntries){
                     model.addRow(new Object[]{
                             checkoutRecordEntry.getBookCopy().getBook().getTitle() + " - " + checkoutRecordEntry.getBookCopy().getBook().getIsbn() + " - " + checkoutRecordEntry.getBookCopy().getCopyNum(),
                             checkoutRecordEntry.getDueDate(),
@@ -77,7 +74,6 @@ public class ListCheckOutRecordEntryPanel extends JPanel {
         topPanel.add(insideTopPanel, BorderLayout.NORTH);
     }
     private void defineBotPanel(){
-        jLabel = new JLabel("Please enter number of copy : ");
 
         BottomPanel = new JPanel(new FlowLayout());
         BottomPanel.add(jLabel);
