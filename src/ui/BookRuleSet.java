@@ -35,12 +35,12 @@ public class BookRuleSet implements RuleSet {
     }
 
     private void idNumericRule() throws RuleException {
-        String val = addNewBookPanel.getISBNField().trim();
+        String val = addNewBookPanel.getMaxCheckoutLength().trim();
         try {
             Integer.parseInt(val);
             //val is numeric
         } catch (NumberFormatException e) {
-            throw new RuleException("ISBN must be numeric");
+            throw new RuleException("Max checkout length must be numeric");
         }
     }
 

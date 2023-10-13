@@ -40,8 +40,7 @@ class AddNewBookPanel extends JPanel implements IPanel{
 
         List<LibraryMember> libraryMembers = dataAccessFacade.allMembers();
 
-        addField("ISBN:", ISBNField = createNonEditableTextField(10));
-        ISBNField.setText(LibraryMember.genId(libraryMembers));
+        addField("ISBN:", ISBNField = createTextField(10));
         addField("Book Title:", bookTitle = createTextField(20));
         addField("Max Checkout Length:", maxCheckoutLength = createTextField(20));
         addField("Author First Name:", authorFirstName = createTextField(30));
@@ -90,11 +89,27 @@ class AddNewBookPanel extends JPanel implements IPanel{
                     authorFirstName.getText(), authorLastName.getText(), telephoneNumber.getText(), authorBio.getText(),
                     authorStreetField.getText(), authorCityField.getText(), authorStateField.getText(),
                     authorZipField.getText());
+            JOptionPane.showMessageDialog(this, "Book Added Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            clearAllFiled();
         } catch (RuleException e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
 
         }
 
+    }
+
+    private  void clearAllFiled(){
+        ISBNField.setText("");
+        bookTitle.setText("");
+        maxCheckoutLength.setText("");
+        authorFirstName.setText("");
+        authorLastName.setText("");
+        telephoneNumber.setText("");
+        authorBio.setText("");
+        authorStreetField.setText("");
+        authorCityField.setText("");
+        authorStateField.setText("");
+        authorZipField.setText("");
     }
     public String getISBNField() {
         return ISBNField.getText();

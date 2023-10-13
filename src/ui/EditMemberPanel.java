@@ -48,7 +48,7 @@ class EditMemberPanel extends JPanel implements IPanel{
         main.add(memberLookup,BorderLayout.NORTH);
         memberData.removeAll();
 
-        memberData.setLayout(new GridLayout(0,2));
+        memberData.setLayout(new GridLayout(10,2));
         addField("Member ID:", memberIdField = createTextField(10));
         memberIdField.setEditable(false);
         addField("First Name:", firstNameField = createTextField(20));
@@ -58,11 +58,11 @@ class EditMemberPanel extends JPanel implements IPanel{
         addField("State:", stateField = createTextField(2));
         addField("ZIP:", zipField = createTextField(10));
         addField("Telephone Number:", phoneField = createTextField(12));
-
-        main.add(memberData,BorderLayout.CENTER);
         submitButton = new JButton("Submit");
+        main.add(submitButton,BorderLayout.SOUTH);
+        main.add(memberData,BorderLayout.CENTER);
+
         add(main);
-        add(submitButton);
         jButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -92,6 +92,11 @@ class EditMemberPanel extends JPanel implements IPanel{
         phoneField.setText(libraryMember.getTelephone());
     }
     private void setMemberData(){
+        if (memberId.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter member id and lookup" , "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         if(!Objects.equals(firstNameField.getText(), libraryMember.getFirstName())){
                     libraryMember.setFirstName(firstNameField.getText());
                 }
@@ -114,9 +119,10 @@ class EditMemberPanel extends JPanel implements IPanel{
                     libraryMember.setTelephone(phoneField.getText());
                 }
         try {
-//            RuleSet rules = RuleSetFactory.getRuleSet(this);
-//            rules.applyRules(this);
-            systemController.AddNewMember(
+            RuleSet rules = RuleSetFactory.getRuleSet(this);
+            rules.applyRules(this);
+
+            systemController.addNewMember(
                     libraryMember.getMemberId(),
                     libraryMember.getFirstName(),
                     libraryMember.getLastName(),
@@ -127,12 +133,10 @@ class EditMemberPanel extends JPanel implements IPanel{
                     libraryMember.getTelephone()
             );
             JOptionPane.showMessageDialog(this, "Member Updated Successfully" , "Success", JOptionPane.INFORMATION_MESSAGE);
-        } catch(NullPointerException e) {
+        } catch(RuleException e) {
             JOptionPane.showMessageDialog(this, e.getMessage() , "Error", JOptionPane.ERROR_MESSAGE);
 
         }
-
-
 
     }
 

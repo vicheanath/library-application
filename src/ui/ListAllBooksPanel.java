@@ -20,15 +20,22 @@ import business.SystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ListAllBooksPanel extends JPanel implements IPanel{
+class ListAllBooksPanel extends JPanel implements IPanel {
     ControllerInterface ci = new SystemController();
 
-    public ListAllBooksPanel() {
-        List<Book> books = ci.allBooks();
-		Collections.sort(books, (b1, b2) -> b1.getIsbn().compareTo(b2.getIsbn()));
-		String[] columnNames = {"ISBN", "Title", "Authors", "Max Checkout Length"};
-		DefaultTableModel model = new DefaultTableModel(null, columnNames);
+	public static  String[] col = {"ISBN", "Title", "Authors", "Max Checkout Length"};
 
+	public static DefaultTableModel model = new DefaultTableModel(null,col);
+
+	public static JTable table = new JTable(model);
+	public static JScrollPane scrollPane = new JScrollPane(table);
+
+    public ListAllBooksPanel() {
+
+    }
+
+	private void getBookTable() {
+		List<Book> books = ci.allBooks();
 		for (Book book : books																																																																																																																																																																																																																																																																																																																																																																																																																																					) {
 			Object[] rowData = new Object[]{
 					book.getIsbn(), book.getTitle(),
@@ -38,19 +45,17 @@ class ListAllBooksPanel extends JPanel implements IPanel{
 			};
 			model.addRow(rowData);
 		}
-		JTable table = new JTable(model);
-		JScrollPane scrollPane = new JScrollPane(table);
 		table.setFillsViewportHeight(true);
 		table.setRowSelectionAllowed(true);
 		table.setColumnSelectionAllowed(false);
 		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		table.setRowHeight(30);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setEnabled(false);
+//		table.setEnabled(false);
 
 		add(scrollPane);
 		setColumnWidths(table);
-    }
+	}
 
 	private void setColumnWidths(JTable table) {
 		// Set the preferred width for each column
@@ -63,6 +68,7 @@ class ListAllBooksPanel extends JPanel implements IPanel{
 
 	@Override
 	public void initialize() {
-
+		model.setRowCount(0);
+		getBookTable();
 	}
 }

@@ -23,20 +23,25 @@ import java.awt.event.ActionListener;
 
 class ListAllMemberPanel extends JPanel implements IPanel{
     ControllerInterface ci = new SystemController();
+	public static  String[] col = {"Member ID", "First Name", "Last Name", "Telephone", "Street", "City", "State", "Zip"};
 
-    public ListAllMemberPanel() {
-        List<LibraryMember> members = ci.allMembers();
+	public static DefaultTableModel model = new DefaultTableModel(null,col);
 
-		String[] col = {"Member ID", "First Name", "Last Name", "Telephone", "Street", "City", "State", "Zip"};
+	public static JTable table = new JTable(model);
+	public static JScrollPane scrollPane = new JScrollPane(table);
 
-		DefaultTableModel model = new DefaultTableModel(null,col);
+	public ListAllMemberPanel() {
+
+    }
+
+	private void getMemberTable(){
+		List<LibraryMember> members = ci.allMembers();
 
 		for (LibraryMember p : members) {
 			Object[] row = new Object[]{p.getMemberId(), p.getFirstName(), p.getLastName(), p.getTelephone(), p.getAddress().getStreet(), p.getAddress().getCity(), p.getAddress().getState(), p.getAddress().getZip()};
 			model.addRow(row);
 		}
-		JTable table = new JTable(model);
-		JScrollPane scrollPane = new JScrollPane(table);
+
 		table.setFillsViewportHeight(true);
 		table.setFillsViewportHeight(true);
 		table.setRowSelectionAllowed(true);
@@ -47,7 +52,7 @@ class ListAllMemberPanel extends JPanel implements IPanel{
 		table.setEnabled(false);
 		setColumnWidths(table);
 		add(scrollPane);
-    }
+	}
 
 	private void setColumnWidths(JTable table) {
 		// Set the preferred width for each column
@@ -59,12 +64,13 @@ class ListAllMemberPanel extends JPanel implements IPanel{
 		columnModel.getColumn(4).setPreferredWidth(900);  // Street
 		columnModel.getColumn(5).setPreferredWidth(400);  // City
 		columnModel.getColumn(6).setPreferredWidth(200);  // State
-		columnModel.getColumn(7).setPreferredWidth(300);  // Zip
+		columnModel.getColumn(7).setPreferredWidth(500);  // Zip
 
 	}
 
 	@Override
 	public void initialize() {
-
+		model.setRowCount(0);
+		getMemberTable();
 	}
 }

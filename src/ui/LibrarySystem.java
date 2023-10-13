@@ -12,6 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 
 
+class GroupMenu {
+    String name;
+    List<LMenu> menus;
+    GroupMenu(String name, List<LMenu> menus) {
+        this.name = name;
+        this.menus = menus;
+    }
+}
+
 class LMenu {
     String name;
     List<Auth> roles;
@@ -37,20 +46,28 @@ public class LibrarySystem extends JFrame {
     public static final String EDIT_MEMBER = "Edit member";
     public static final String ADD_MEMBER = "Add Member";
     public static final String LIST_USERS = "Users";
-
-
-    public List<LMenu> menus = List.of(
+    public List<LMenu> bookMenu = List.of(
             new LMenu(LIST_ALL_BOOKS,new ListAllBooksPanel(), List.of(Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu(ADD_NEW_BOOK, new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
             new LMenu(CHECK_OUT_BOOK, new CheckoutBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
             new LMenu(CHECK_OVERDUE_BOOK, new ListOverDueBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
             new LMenu(LIST_CHECK_RECORD, new ListCheckOutRecordEntryPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu(ADD_COPY_TO_COLLECTION, new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu(LIST_ALL_MEMBERS, new ListAllMemberPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu(EDIT_MEMBER, new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
-            new LMenu(ADD_MEMBER, new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu(LIST_USERS, new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
+            new LMenu(ADD_COPY_TO_COLLECTION, new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN))
+    );
 
+    public List<LMenu> memberMenu = List.of(
+            new LMenu(EDIT_MEMBER, new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
+            new LMenu(ADD_MEMBER, new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN))
+    );
+
+    public List<LMenu> userMenu = List.of(
+            new LMenu(LIST_USERS, new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
+    );
+
+    public  List<GroupMenu> systemMenu = List.of(
+            new GroupMenu("Book",bookMenu),
+            new GroupMenu("Member",memberMenu),
+            new GroupMenu("User",userMenu)
     );
 
 
@@ -119,68 +136,78 @@ public class LibrarySystem extends JFrame {
         JLabel label = new JLabel("Library System");
 
 
-        label.setFont(new Font("Arial", Font.BOLD, 20));
+        label.setFont(new Font("Arial", Font.BOLD, 18));
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         label.setAlignmentY(Component.CENTER_ALIGNMENT);
         label.setMaximumSize(new Dimension(150, 50));
-        label.setForeground(Color.BLUE);
+        label.setForeground(LColor.PRIMARY_COLOR);
 
         leftPanel.add(label);
 
 
-        leftPanel.setBackground(Color.LIGHT_GRAY);
+        leftPanel.setBackground(LColor.TERTIARY_COLOR);
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
-            for (LMenu m : menus) {
-                if (m.roles.contains(SystemController.currentAuth)) {
-                    JButton button = new JButton(m.name);
-                    button.setMaximumSize(new Dimension(150, 40));
-                    button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                    button.setAlignmentY(Component.CENTER_ALIGNMENT);
-                    button.setFont(new Font("Arial", Font.PLAIN, 14));
+            for (GroupMenu groupMenu : systemMenu) {
+                JLabel groupLabel = new JLabel(groupMenu.name);
+                groupLabel.setFont(new Font("Arial", Font.BOLD, 14));
+                groupLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+                groupLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+                groupLabel.setMaximumSize(new Dimension(150, 30));
+                groupLabel.setForeground(LColor.PRIMARY_COLOR);
+                leftPanel.add(groupLabel);
 
-                    button.setForeground(Color.BLACK);
-                    button.setBackground(Color.WHITE);
-                    button.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
+                for (LMenu m : groupMenu.menus) {
+                    if (m.roles.contains(SystemController.currentAuth)) {
+                        JButton button = new JButton(m.name);
+                        button.setMaximumSize(new Dimension(150, 40));
+                        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                        button.setAlignmentY(Component.CENTER_ALIGNMENT);
+                        button.setFont(new Font("Arial", Font.PLAIN, 14));
 
-                            switch (m.name) {
-                                case LIST_ALL_BOOKS:
-                                    ((ListAllBooksPanel) m.panel).initialize();
-                                    break;
-                                case ADD_NEW_BOOK:
-                                    ((AddNewBookPanel) m.panel).initialize();
-                                    break;
-                                case CHECK_OUT_BOOK:
-                                    ((CheckoutBookPanel) m.panel).initialize();
-                                    break;
-                                case CHECK_OVERDUE_BOOK:
-                                    ((ListOverDueBookPanel) m.panel).initialize();
-                                    break;
-                                case LIST_CHECK_RECORD:
-                                    ((ListCheckOutRecordEntryPanel) m.panel).initialize();
-                                    break;
-                                case ADD_COPY_TO_COLLECTION:
-                                    ((AddCopyBookToCollectionPanel) m.panel).initialize();
-                                    break;
-                                case LIST_ALL_MEMBERS:
-                                    ((ListAllMemberPanel) m.panel).initialize();
-                                    break;
-                                case EDIT_MEMBER:
-                                    ((EditMemberPanel) m.panel).initialize();
-                                    break;
-                                case ADD_MEMBER:
-                                    ((AddMemberPanel) m.panel).initialize();
-                                    break;
-                                case LIST_USERS:
-                                    ((ListUserPanel) m.panel).initialize();
-                                    break;
+                        button.setForeground(Color.BLACK);
+                        button.setBackground(Color.WHITE);
+                        button.addActionListener(new ActionListener() {
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+
+                                switch (m.name) {
+                                    case LIST_ALL_BOOKS:
+                                        ((ListAllBooksPanel) m.panel).initialize();
+                                        break;
+                                    case ADD_NEW_BOOK:
+                                        ((AddNewBookPanel) m.panel).initialize();
+                                        break;
+                                    case CHECK_OUT_BOOK:
+                                        ((CheckoutBookPanel) m.panel).initialize();
+                                        break;
+                                    case CHECK_OVERDUE_BOOK:
+                                        ((ListOverDueBookPanel) m.panel).initialize();
+                                        break;
+                                    case LIST_CHECK_RECORD:
+                                        ((ListCheckOutRecordEntryPanel) m.panel).initialize();
+                                        break;
+                                    case ADD_COPY_TO_COLLECTION:
+                                        ((AddCopyBookToCollectionPanel) m.panel).initialize();
+                                        break;
+                                    case LIST_ALL_MEMBERS:
+                                        ((ListAllMemberPanel) m.panel).initialize();
+                                        break;
+                                    case EDIT_MEMBER:
+                                        ((EditMemberPanel) m.panel).initialize();
+                                        break;
+                                    case ADD_MEMBER:
+                                        ((AddMemberPanel) m.panel).initialize();
+                                        break;
+                                    case LIST_USERS:
+                                        ((ListUserPanel) m.panel).initialize();
+                                        break;
+                                }
+
+                                showPanel(m.panel);
                             }
-
-                            showPanel(m.panel);
-                        }
-                    });
-                    leftPanel.add(button);
+                        });
+                        leftPanel.add(button);
+                    }
                 }
 
         }
@@ -195,6 +222,13 @@ public class LibrarySystem extends JFrame {
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+//                alert confirm Ok or Cancel
+                int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
+                if (confirm != JOptionPane.YES_OPTION) {
+                    return;
+                }
+
+
                 SystemController.currentAuth = null;
                 dispose();
                 new LibrarySystem();
