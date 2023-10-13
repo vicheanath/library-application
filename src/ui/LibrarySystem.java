@@ -159,13 +159,7 @@ public class LibrarySystem extends JFrame {
                 for (LMenu m : groupMenu.menus) {
                     if (m.roles.contains(SystemController.currentAuth)) {
                         JButton button = new JButton(m.name);
-                        button.setMaximumSize(new Dimension(150, 40));
-                        button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                        button.setAlignmentY(Component.CENTER_ALIGNMENT);
-                        button.setFont(new Font("Arial", Font.PLAIN, 14));
-
-                        button.setForeground(Color.BLACK);
-                        button.setBackground(Color.WHITE);
+                        buttonStyle(button);
                         button.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
@@ -213,22 +207,14 @@ public class LibrarySystem extends JFrame {
         }
 
         JButton logoutButton = new JButton("Logout");
-        logoutButton.setMaximumSize(new Dimension(150, 40));
-        logoutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        logoutButton.setAlignmentY(Component.CENTER_ALIGNMENT);
-        logoutButton.setFont(new Font("Arial", Font.PLAIN, 14));
-        logoutButton.setForeground(Color.BLACK);
-        logoutButton.setBackground(Color.WHITE);
+        buttonStyle(logoutButton);
         logoutButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                alert confirm Ok or Cancel
                 int confirm = JOptionPane.showConfirmDialog(null, "Are you sure you want to logout?", "Logout", JOptionPane.YES_NO_OPTION);
                 if (confirm != JOptionPane.YES_OPTION) {
                     return;
                 }
-
-
                 SystemController.currentAuth = null;
                 dispose();
                 new LibrarySystem();
@@ -239,9 +225,33 @@ public class LibrarySystem extends JFrame {
 
     }
 
+    public static void buttonStyle(JButton button) {
+        button.setMaximumSize(new Dimension(190, 40));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setAlignmentY(Component.CENTER_ALIGNMENT);
+        button.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        button.setHorizontalAlignment(SwingConstants.LEFT);
+
+        button.setBackground(LColor.ACCENT_COLOR);
+        button.setForeground(LColor.PRIMARY_COLOR);
+
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                button.setBackground(LColor.PRIMARY_COLOR);
+                button.setForeground(LColor.ACCENT_COLOR);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                button.setBackground(LColor.ACCENT_COLOR);
+                button.setForeground(LColor.PRIMARY_COLOR);
+            }
+        });
+    }
+
     private void createSplitPane() {
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, new JPanel());
-        splitPane.setDividerLocation(160);
+        splitPane.setDividerLocation(200);
         splitPane.setEnabled(false); // Disable resizing
     }
 

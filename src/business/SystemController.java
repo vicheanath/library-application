@@ -210,7 +210,6 @@ public class SystemController implements ControllerInterface {
        SystemController systemController = new SystemController();
        List<LibraryMember> memberList = systemController.allMembers();
 
-
 	   List<BookDueDate> bookDueDates = new ArrayList<>();
 	   List<Book> bookList = systemController.allBooks();
 	   if(!bookList.contains(systemController.getBookById(isbn))){
