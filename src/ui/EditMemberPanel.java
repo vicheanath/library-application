@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 
-class EditMemberPanel extends JPanel {
+class EditMemberPanel extends JPanel implements IPanel{
     private JTextField memberIdField;
     private JTextField firstNameField;
     private JTextField lastNameField;
@@ -181,5 +181,10 @@ class EditMemberPanel extends JPanel {
 
     public String getPhoneField() {
         return phoneField.getText();
+    }
+
+    @Override
+    public void initialize() {
+
     }
 }

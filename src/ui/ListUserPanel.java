@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.Collections;
 import java.util.List;
 
-class ListUserPanel extends JPanel {
+class ListUserPanel extends JPanel implements IPanel{
     ControllerInterface ci = new SystemController();
 
     public ListUserPanel() {
@@ -35,4 +35,9 @@ class ListUserPanel extends JPanel {
 		table.setFillsViewportHeight(true);
 		add(scrollPane);
     }
+
+	@Override
+	public void initialize() {
+
+	}
 }

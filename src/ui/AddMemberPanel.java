@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 
-class AddMemberPanel extends JPanel {
+class AddMemberPanel extends JPanel implements IPanel {
     private JTextField memberIdField;
     private JTextField firstNameField;
     private JTextField lastNameField;
@@ -130,5 +130,10 @@ class AddMemberPanel extends JPanel {
 
     public JButton getSubmitButton() {
         return submitButton;
+    }
+
+    @Override
+    public void initialize() {
+       System.out.println("AddMemberPanel.initialize");
     }
 }

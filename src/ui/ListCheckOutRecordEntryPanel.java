@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class ListCheckOutRecordEntryPanel extends JPanel {
+public class ListCheckOutRecordEntryPanel extends JPanel implements IPanel {
 
     ControllerInterface ci = new SystemController();
 
@@ -27,11 +27,12 @@ public class ListCheckOutRecordEntryPanel extends JPanel {
     JLabel jLabel;
     JPanel main = new JPanel(new BorderLayout());
     public ListCheckOutRecordEntryPanel() {
-        model = new DefaultTableModel(new Object[][]{}, new String[]{"Book Copy" , "Due Date" });
+        System.out.println("ListCheckOutRecordEntryPanel+++++");
+        model = new DefaultTableModel(new Object[][]{}, new String[]{"Book Copy" , "Due Date" ,"First Name", "Last Name","Member ID"});
         defineTopPanel();
         defineTopTable();
         defineBotPanel();
-
+        getListCheckOutRecord();
         main.add(topPanel,BorderLayout.NORTH);
         main.add(BottomPanel, BorderLayout.SOUTH);
         add(main);
@@ -53,8 +54,21 @@ public class ListCheckOutRecordEntryPanel extends JPanel {
                 }
             }
         });
+    }
 
-
+    private void getListCheckOutRecord(){
+        checkoutRecordEntries = systemController.getCheckOutRecordEntryAllMembers();
+        model.setRowCount(0);
+        for (CheckOutRecordAllMember checkoutRecordEntry:checkoutRecordEntries){
+            model.addRow(new Object[]{
+                    checkoutRecordEntry.getBookCopy().getBook().getTitle(),
+                    checkoutRecordEntry.getDueDate(),
+                    checkoutRecordEntry.getLibraryMember().getFirstName(),
+                    checkoutRecordEntry.getLibraryMember().getLastName(),
+                    checkoutRecordEntry.getLibraryMember().getMemberId()
+            });
+        }
+        setColumnWidths(table);
     }
     private void defineTopPanel(){
         submitButton = new JButton("🔍 Search");
@@ -81,7 +95,15 @@ public class ListCheckOutRecordEntryPanel extends JPanel {
     private void setColumnWidths(JTable table) {
         // Set the preferred width for each column
         TableColumnModel columnModel = table.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(250); // ISBN
-        columnModel.getColumn(1).setPreferredWidth(300); // Title
+        columnModel.getColumn(0).setPreferredWidth(250); // Book Copy
+        columnModel.getColumn(1).setPreferredWidth(300); // Due Date
+        columnModel.getColumn(2).setPreferredWidth(300); // First Name
+        columnModel.getColumn(3).setPreferredWidth(300); // Last Name
+        columnModel.getColumn(4).setPreferredWidth(300); // Member ID
+    }
+
+    @Override
+    public void initialize() {
+        getListCheckOutRecord();
     }
 }

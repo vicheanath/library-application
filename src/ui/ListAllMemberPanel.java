@@ -21,7 +21,7 @@ import business.SystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ListAllMemberPanel extends JPanel {
+class ListAllMemberPanel extends JPanel implements IPanel{
     ControllerInterface ci = new SystemController();
 
     public ListAllMemberPanel() {
@@ -60,6 +60,11 @@ class ListAllMemberPanel extends JPanel {
 		columnModel.getColumn(5).setPreferredWidth(400);  // City
 		columnModel.getColumn(6).setPreferredWidth(200);  // State
 		columnModel.getColumn(7).setPreferredWidth(300);  // Zip
+
+	}
+
+	@Override
+	public void initialize() {
 
 	}
 }

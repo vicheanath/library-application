@@ -20,7 +20,7 @@ import business.SystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class ListAllBooksPanel extends JPanel {
+class ListAllBooksPanel extends JPanel implements IPanel{
     ControllerInterface ci = new SystemController();
 
     public ListAllBooksPanel() {
@@ -59,5 +59,10 @@ class ListAllBooksPanel extends JPanel {
 		columnModel.getColumn(1).setPreferredWidth(300); // Title
 		columnModel.getColumn(2).setPreferredWidth(700); // Authors
 		columnModel.getColumn(3).setPreferredWidth(300); // Max Checkout Length
+	}
+
+	@Override
+	public void initialize() {
+
 	}
 }

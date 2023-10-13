@@ -15,7 +15,7 @@ import business.SystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-class AddNewBookPanel extends JPanel {
+class AddNewBookPanel extends JPanel implements IPanel{
     private JTextField ISBNField;
     private JTextField bookTitle;
     private JTextField maxCheckoutLength;
@@ -145,4 +145,8 @@ class AddNewBookPanel extends JPanel {
     }
 
 
+    @Override
+    public void initialize() {
+        System.out.println("AddNewBookPanel.initialize");
+    }
 }
