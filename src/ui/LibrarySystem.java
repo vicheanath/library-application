@@ -65,8 +65,8 @@ public class LibrarySystem extends JFrame {
 
         JPasswordField passwordText = new JPasswordField(10);
         passwordText.setMaximumSize(new Dimension(150, 30));
-//        userText.setText("101");
-//        passwordText.setText("xyz");
+        userText.setText("101");
+        passwordText.setText("xyz");
 
         panel.setLayout(new GridLayout(3, 2));
         panel.add(userLabel);
