@@ -8,6 +8,7 @@ import librarysystem.AddNewBook;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -26,17 +27,29 @@ public class LibrarySystem extends JFrame {
     private JPanel leftPanel;
     private JSplitPane splitPane;
 
+    public static final String LIST_ALL_BOOKS = "List All Books";
+    public static final String ADD_NEW_BOOK = "Add New Book";
+    public static final String CHECK_OUT_BOOK = "Check Out Book";
+    public static final String CHECK_OVERDUE_BOOK = "Check OverDue Book";
+    public static final String LIST_CHECK_RECORD = "List Check Record";
+    public static final String ADD_COPY_TO_COLLECTION = "Add copy to collection";
+    public static final String LIST_ALL_MEMBERS = "List All Members";
+    public static final String EDIT_MEMBER = "Edit member";
+    public static final String ADD_MEMBER = "Add Member";
+    public static final String LIST_USERS = "Users";
+
+
     public List<LMenu> menus = List.of(
-            new LMenu("List All Books",new ListAllBooksPanel(), List.of(Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("Add New Book", new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("Check Out Book", new CheckoutBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("Check OverDue Book", new ListOverDueBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("List Check Record", new ListCheckOutRecordEntryPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("Add copy to collection", new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu("List All Members", new ListAllMemberPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("Edit member", new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
-            new LMenu("Add Member", new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu("Users", new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
+            new LMenu(LIST_ALL_BOOKS,new ListAllBooksPanel(), List.of(Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu(ADD_NEW_BOOK, new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu(CHECK_OUT_BOOK, new CheckoutBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu(CHECK_OVERDUE_BOOK, new ListOverDueBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu(LIST_CHECK_RECORD, new ListCheckOutRecordEntryPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu(ADD_COPY_TO_COLLECTION, new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu(LIST_ALL_MEMBERS, new ListAllMemberPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu(EDIT_MEMBER, new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
+            new LMenu(ADD_MEMBER, new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN)),
+            new LMenu(LIST_USERS, new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
 
     );
 
@@ -130,6 +143,40 @@ public class LibrarySystem extends JFrame {
                     button.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
+
+                            switch (m.name) {
+                                case LIST_ALL_BOOKS:
+                                    ((ListAllBooksPanel) m.panel).initialize();
+                                    break;
+                                case ADD_NEW_BOOK:
+                                    ((AddNewBookPanel) m.panel).initialize();
+                                    break;
+                                case CHECK_OUT_BOOK:
+                                    ((CheckoutBookPanel) m.panel).initialize();
+                                    break;
+                                case CHECK_OVERDUE_BOOK:
+                                    ((ListOverDueBookPanel) m.panel).initialize();
+                                    break;
+                                case LIST_CHECK_RECORD:
+                                    ((ListCheckOutRecordEntryPanel) m.panel).initialize();
+                                    break;
+                                case ADD_COPY_TO_COLLECTION:
+                                    ((AddCopyBookToCollectionPanel) m.panel).initialize();
+                                    break;
+                                case LIST_ALL_MEMBERS:
+                                    ((ListAllMemberPanel) m.panel).initialize();
+                                    break;
+                                case EDIT_MEMBER:
+                                    ((EditMemberPanel) m.panel).initialize();
+                                    break;
+                                case ADD_MEMBER:
+                                    ((AddMemberPanel) m.panel).initialize();
+                                    break;
+                                case LIST_USERS:
+                                    ((ListUserPanel) m.panel).initialize();
+                                    break;
+                            }
+
                             showPanel(m.panel);
                         }
                     });
@@ -165,6 +212,8 @@ public class LibrarySystem extends JFrame {
     }
 
     private void showPanel(JPanel panelToShow) {
+
+
         splitPane.setRightComponent(panelToShow);
     }
 

@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AddCopyBookToCollectionPanel extends JPanel {
+public class AddCopyBookToCollectionPanel extends JPanel implements IPanel {
 
     ControllerInterface ci = new SystemController();
 
@@ -107,5 +107,10 @@ public class AddCopyBookToCollectionPanel extends JPanel {
         columnModel.getColumn(3).setPreferredWidth(150); // Max Checkout Length
         columnModel.getColumn(4).setPreferredWidth(650); // Is copy available
         columnModel.getColumn(5).setPreferredWidth(450); // Number of copies
+    }
+
+    @Override
+    public void initialize() {
+        System.out.println("AddCopyBookToCollectionPanel.initialize");
     }
 }

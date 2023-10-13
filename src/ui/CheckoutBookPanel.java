@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 
-class CheckoutBookPanel extends JPanel {
+class CheckoutBookPanel extends JPanel implements IPanel {
     private JTextField memberIdField;
     private JTextField bookIsbnField;
 
@@ -102,4 +102,8 @@ class CheckoutBookPanel extends JPanel {
         return submitButton;
     }
 
+    @Override
+    public void initialize() {
+
+    }
 }

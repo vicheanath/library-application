@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 
 import java.util.List;
 
-public class ListOverDueBookPanel extends JPanel {
+public class ListOverDueBookPanel extends JPanel implements IPanel{
 
     ControllerInterface ci = new SystemController();
 
@@ -97,5 +97,10 @@ public class ListOverDueBookPanel extends JPanel {
         columnModel.getColumn(2).setPreferredWidth(400); // Authors
         columnModel.getColumn(3).setPreferredWidth(150); // Max Checkout Length
         columnModel.getColumn(4).setPreferredWidth(650); // Is copy available
+    }
+
+    @Override
+    public void initialize() {
+
     }
 }
