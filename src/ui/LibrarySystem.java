@@ -12,26 +12,27 @@ import java.util.HashMap;
 import java.util.List;
 
 
-class GroupMenu {
-    String name;
-    List<LMenu> menus;
-    GroupMenu(String name, List<LMenu> menus) {
-        this.name = name;
-        this.menus = menus;
-    }
-}
 
-class LMenu {
-    String name;
-    List<Auth> roles;
-    JPanel panel;
-    LMenu(String name, JPanel panel, List<Auth> roles ) {
-        this.name = name;
-        this.roles = roles;
-        this.panel = panel;
-    }
-}
 public class LibrarySystem extends JFrame {
+    class GroupMenu {
+        String name;
+        List<LMenu> menus;
+        GroupMenu(String name, List<LMenu> menus) {
+            this.name = name;
+            this.menus = menus;
+        }
+    }
+
+    class LMenu {
+        String name;
+        List<Auth> roles;
+        JPanel panel;
+        LMenu(String name, JPanel panel, List<Auth> roles ) {
+            this.name = name;
+            this.roles = roles;
+            this.panel = panel;
+        }
+    }
 
     private JPanel leftPanel;
     private JSplitPane splitPane;
@@ -253,12 +254,49 @@ public class LibrarySystem extends JFrame {
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, new JPanel());
         splitPane.setDividerLocation(200);
         splitPane.setEnabled(false); // Disable resizing
+        splitPane.setDividerSize(1);
+        splitPane.setBackground(LColor.TERTIARY_COLOR);
+        splitPane.setLeftComponent(leftPanel);
+        splitPane.setRightComponent(setHeaderRightPanel(new StarterPagePanel()));
+
+    }
+
+    private JPanel setHeaderRightPanel( JPanel panelToShow) {
+        JPanel rightHeaderPanel = new JPanel();
+        rightHeaderPanel.setBackground(LColor.TERTIARY_COLOR);
+        rightHeaderPanel.setLayout(new BoxLayout(rightHeaderPanel, BoxLayout.Y_AXIS));
+        rightHeaderPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+//        and authentication
+        JLabel label = new JLabel("Welcome " + SystemController.currentUser.getId());
+        JLabel roleLabel = new JLabel("Role: " + SystemController.currentUser.getAuthorization());
+
+
+
+        label.setFont(new Font("Arial", Font.BOLD, 14));
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        label.setAlignmentY(Component.CENTER_ALIGNMENT);
+        label.setMaximumSize(new Dimension(150, 30));
+        label.setForeground(LColor.PRIMARY_COLOR);
+
+        roleLabel.setFont(new Font("Arial", Font.BOLD, 12));
+        roleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        roleLabel.setAlignmentY(Component.CENTER_ALIGNMENT);
+        roleLabel.setMaximumSize(new Dimension(150, 30));
+        roleLabel.setForeground(LColor.PRIMARY_COLOR);
+
+
+
+        rightHeaderPanel.add(label);
+        rightHeaderPanel.add(roleLabel);
+        rightHeaderPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+        rightHeaderPanel.add(panelToShow);
+        return rightHeaderPanel;
+
     }
 
     private void showPanel(JPanel panelToShow) {
-
-
-        splitPane.setRightComponent(panelToShow);
+        splitPane.setRightComponent(setHeaderRightPanel(panelToShow));
     }
 
     public static void main(String[] args) {

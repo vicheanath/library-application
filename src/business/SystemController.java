@@ -13,6 +13,7 @@ import librarysystem.*;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
+	public static User currentUser = null;
 	private static LibWindow[] allWindows = {
 			LibrarySystem.INSTANCE,
 			LoginWindow.INSTANCE,
@@ -33,6 +34,7 @@ public class SystemController implements ControllerInterface {
 			throw new LoginException("Password incorrect");
 		}
 		currentAuth = map.get(id).getAuthorization();
+		currentUser = map.get(id);
 		// LibrarySystem.hideAllWindows();
 		// librarysystem.StarterPage.INSTANCE.init(currentAuth);
 		// Util.centerFrameOnDesktop(librarysystem.StarterPage.INSTANCE);
