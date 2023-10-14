@@ -163,7 +163,6 @@ public class LibrarySystem extends JFrame {
                         button.addActionListener(new ActionListener() {
                             @Override
                             public void actionPerformed(ActionEvent e) {
-
                                 switch (m.name) {
                                     case LIST_ALL_BOOKS:
                                         ((ListAllBooksPanel) m.panel).initialize();

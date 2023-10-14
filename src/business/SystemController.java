@@ -115,12 +115,12 @@ public class SystemController implements ControllerInterface {
 			// 6. checkCoutRecordEntry(copy, maxCheckoutLength)
 			LibraryMember member = da.searchMember(memberId);
 
-			//member.checkOut(copy, LocalDate.now(), todayPlusCheckoutLength(maxCheckoutLength));
-			LocalDate date = LocalDate.parse("2023-09-20");
-			LocalDate date12 = LocalDate.parse("2023-10-10");
-
-
-			member.checkOut(copy, date, date12);
+			member.checkOut(copy, LocalDate.now(), todayPlusCheckoutLength(maxCheckoutLength));
+//			LocalDate date = LocalDate.parse("2023-09-20");
+//			LocalDate date12 = LocalDate.parse("2023-10-10");
+//
+//
+//			member.checkOut(copy, date, date12);
 
 
 
