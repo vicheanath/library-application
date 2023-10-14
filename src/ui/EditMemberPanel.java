@@ -78,19 +78,31 @@ class EditMemberPanel extends JPanel implements IPanel{
         });
     }
     private void defineMemberData(){
+        if (memberId.getText().isEmpty()){
+            JOptionPane.showMessageDialog(this, "Please enter member id and lookup" , "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        boolean isNotfound = true;
         for(LibraryMember l : libraryMembers){
+            System.out.println(l.getMemberId());
             if(Objects.equals(l.getMemberId(), memberId.getText())){
+                System.out.println("here");
                 libraryMember = l;
+                isNotfound = false;
             }
         }
-        memberIdField.setText(libraryMember.getMemberId());
-        firstNameField.setText(libraryMember.getFirstName());
-        lastNameField.setText(libraryMember.getLastName());
-        streetField.setText(libraryMember.getAddress().getStreet());
-        cityField.setText(libraryMember.getAddress().getCity());
-        stateField.setText(libraryMember.getAddress().getState());
-        zipField.setText(libraryMember.getAddress().getZip());
-        phoneField.setText(libraryMember.getTelephone());
+        if(libraryMember == null){
+            JOptionPane.showMessageDialog(this, "Entered id not found" , "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            memberIdField.setText(libraryMember.getMemberId());
+            firstNameField.setText(libraryMember.getFirstName());
+            lastNameField.setText(libraryMember.getLastName());
+            streetField.setText(libraryMember.getAddress().getStreet());
+            cityField.setText(libraryMember.getAddress().getCity());
+            stateField.setText(libraryMember.getAddress().getState());
+            zipField.setText(libraryMember.getAddress().getZip());
+            phoneField.setText(libraryMember.getTelephone());
+        }
     }
     private void setMemberData(){
         if (memberId.getText().isEmpty()){
