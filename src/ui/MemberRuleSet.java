@@ -59,8 +59,6 @@ public class MemberRuleSet implements RuleSet {
 			throw new RuleException("Characters is state field must be in range A-Z");
 		}
 	}
-	
-	
 
 	private void idNotZipRule() throws RuleException {
 		String zip = addMemberPanel.getZipField().trim();

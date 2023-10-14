@@ -31,7 +31,12 @@ public class AddCopyBookToCollectionPanel extends JPanel implements IPanel {
     JLabel jLabel;
     JPanel main = new JPanel(new BorderLayout());
     public AddCopyBookToCollectionPanel() {
-        model = new DefaultTableModel(new Object[][]{}, new String[]{"ISBN", "Title", "Authors", "Max Checkout Length", "Is copy available", "Number of copies"});
+        model = new DefaultTableModel(new Object[][]{}, new String[]{
+                "ISBN", "Title",
+                "Authors",
+                "Max Checkout Length",
+                "Is copy available",
+                "Number of copies"});
         defineTopPanel();
         defineTopTable();
         defineBotPanel();
@@ -46,7 +51,13 @@ public class AddCopyBookToCollectionPanel extends JPanel implements IPanel {
                 book = systemController.getBookById(isbn);
                 model.setRowCount(0); // Clear the existing table rows
                 String isCopyAvailable = book.isAvailable() ? "Available" : "Not available";
-                model.addRow(new Object[]{book.getIsbn(), book.getTitle(), book.getAuthors(), book.getMaxCheckoutLength(), isCopyAvailable, book.getNumCopies()});
+                model.addRow(new Object[]{
+                        book.getIsbn(),
+                        book.getTitle(),
+                        book.toStringAllAuther(),
+                        book.getMaxCheckoutLength(),
+                        isCopyAvailable,
+                        book.getNumCopies()});
                 setColumnWidths(table);
             }
         });
@@ -104,9 +115,9 @@ public class AddCopyBookToCollectionPanel extends JPanel implements IPanel {
         columnModel.getColumn(0).setPreferredWidth(250); // ISBN
         columnModel.getColumn(1).setPreferredWidth(300); // Title
         columnModel.getColumn(2).setPreferredWidth(400); // Authors
-        columnModel.getColumn(3).setPreferredWidth(150); // Max Checkout Length
+        columnModel.getColumn(3).setPreferredWidth(450); // Max Checkout Length
         columnModel.getColumn(4).setPreferredWidth(650); // Is copy available
-        columnModel.getColumn(5).setPreferredWidth(450); // Number of copies
+        columnModel.getColumn(5).setPreferredWidth(550); // Number of copies
     }
 
     @Override

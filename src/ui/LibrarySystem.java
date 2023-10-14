@@ -41,28 +41,29 @@ public class LibrarySystem extends JFrame {
     public static final String ADD_NEW_BOOK = "Add New Book";
     public static final String CHECK_OUT_BOOK = "Check Out Book";
     public static final String CHECK_OVERDUE_BOOK = "Check OverDue Book";
-    public static final String LIST_CHECK_RECORD = "List Check Record";
-    public static final String ADD_COPY_TO_COLLECTION = "Add copy to collection";
+    public static final String LIST_CHECK_RECORD = "List Checkout Record";
+    public static final String ADD_COPY_TO_COLLECTION = "Add Copy to collection";
     public static final String LIST_ALL_MEMBERS = "List All Members";
     public static final String EDIT_MEMBER = "Edit member";
     public static final String ADD_MEMBER = "Add Member";
     public static final String LIST_USERS = "Users";
     public List<LMenu> bookMenu = List.of(
-            new LMenu(LIST_ALL_BOOKS,new ListAllBooksPanel(), List.of(Auth.BOTH, Auth.LIBRARIAN)),
-            new LMenu(ADD_NEW_BOOK, new AddNewBookPanel() ,List.of(Auth.BOTH, Auth.LIBRARIAN)),
+            new LMenu(LIST_ALL_BOOKS,new ListAllBooksPanel(), List.of(Auth.BOTH,Auth.ADMIN)),
+            new LMenu(ADD_NEW_BOOK, new AddNewBookPanel() ,List.of(Auth.BOTH,Auth.ADMIN)),
             new LMenu(CHECK_OUT_BOOK, new CheckoutBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
             new LMenu(CHECK_OVERDUE_BOOK, new ListOverDueBookPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
             new LMenu(LIST_CHECK_RECORD, new ListCheckOutRecordEntryPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN)),
-            new LMenu(ADD_COPY_TO_COLLECTION, new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN))
+            new LMenu(ADD_COPY_TO_COLLECTION, new AddCopyBookToCollectionPanel(),List.of(Auth.BOTH, Auth.LIBRARIAN,Auth.ADMIN))
     );
 
     public List<LMenu> memberMenu = List.of(
-            new LMenu(EDIT_MEMBER, new EditMemberPanel(),List.of(Auth.ADMIN, Auth.LIBRARIAN, Auth.BOTH)),
-            new LMenu(ADD_MEMBER, new AddMemberPanel(), List.of(Auth.BOTH,Auth.LIBRARIAN))
+            new LMenu(EDIT_MEMBER, new EditMemberPanel(),List.of(Auth.ADMIN, Auth.BOTH)),
+            new LMenu(ADD_MEMBER, new AddMemberPanel(), List.of(Auth.BOTH, Auth.ADMIN)),
+            new LMenu(LIST_ALL_MEMBERS, new ListAllMemberPanel(),List.of(Auth.BOTH, Auth.ADMIN, Auth.LIBRARIAN))
     );
 
     public List<LMenu> userMenu = List.of(
-            new LMenu(LIST_USERS, new ListUserPanel(),List.of(Auth.BOTH,Auth.LIBRARIAN))
+            new LMenu(LIST_USERS, new ListUserPanel(),List.of(Auth.BOTH, Auth.ADMIN))
     );
 
     public  List<GroupMenu> systemMenu = List.of(
@@ -99,8 +100,6 @@ public class LibrarySystem extends JFrame {
 
         JPasswordField passwordText = new JPasswordField(10);
         passwordText.setMaximumSize(new Dimension(150, 30));
-        userText.setText("101");
-        passwordText.setText("xyz");
 
         panel.setLayout(new GridLayout(3, 2));
         panel.add(userLabel);
@@ -197,7 +196,6 @@ public class LibrarySystem extends JFrame {
                                         ((ListUserPanel) m.panel).initialize();
                                         break;
                                 }
-
                                 showPanel(m.panel);
                             }
                         });

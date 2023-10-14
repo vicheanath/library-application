@@ -115,7 +115,13 @@ public class SystemController implements ControllerInterface {
 			// 6. checkCoutRecordEntry(copy, maxCheckoutLength)
 			LibraryMember member = da.searchMember(memberId);
 
-			member.checkOut(copy, LocalDate.now(), todayPlusCheckoutLength(maxCheckoutLength));
+			//member.checkOut(copy, LocalDate.now(), todayPlusCheckoutLength(maxCheckoutLength));
+			LocalDate date = LocalDate.parse("2023-09-20");
+			LocalDate date12 = LocalDate.parse("2023-10-10");
+
+
+			member.checkOut(copy, date, date12);
+
 
 
 
@@ -228,7 +234,7 @@ public class SystemController implements ControllerInterface {
 
 
            for (CheckoutRecordEntry entry:checkoutRecordEntries) {
-			   if (entry.getDueDate().isAfter(LocalDate.now())) {
+			   if (entry.getDueDate().isBefore(LocalDate.now())) {
 				   Book book = entry.getBookCopy().getBook();
 				   if (book.getIsbn().equals(isbn)) {
 					   BookDueDate bookDueDate = new BookDueDate(entry.getBookCopy().getBook().getIsbn(),

@@ -85,9 +85,9 @@ public class ListOverDueBookPanel extends JPanel implements IPanel{
         jLabel = new JLabel("Please enter number of copy : ");
         copynumber = new JTextField(15);
         BottomPanel = new JPanel(new FlowLayout());
-        BottomPanel.add(jLabel);
-        BottomPanel.add(copynumber);
-        BottomPanel.add(addToCollection);
+//        BottomPanel.add(jLabel);
+//        BottomPanel.add(copynumber);
+//        BottomPanel.add(addToCollection);
     }
     private void setColumnWidths(JTable table) {
         // Set the preferred width for each column
