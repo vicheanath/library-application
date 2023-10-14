@@ -43,8 +43,11 @@ public class ListCheckOutRecordEntryPanel extends JPanel implements IPanel {
                 model.setRowCount(0);
                 for (CheckOutRecordAllMember checkoutRecordEntry:checkoutRecordEntries){
                     model.addRow(new Object[]{
-                            checkoutRecordEntry.getBookCopy().getBook().getTitle() + " - " + checkoutRecordEntry.getBookCopy().getBook().getIsbn() + " - " + checkoutRecordEntry.getBookCopy().getCopyNum(),
+                            checkoutRecordEntry.getBookCopy().getBook().getTitle(),
                             checkoutRecordEntry.getDueDate(),
+                            checkoutRecordEntry.getLibraryMember().getFirstName(),
+                            checkoutRecordEntry.getLibraryMember().getLastName(),
+                            checkoutRecordEntry.getLibraryMember().getMemberId()
                     });
                 }
                 setColumnWidths(table);
