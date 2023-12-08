@@ -9,19 +9,11 @@ import dataaccess.Auth;
 import dataaccess.DataAccess;
 import dataaccess.DataAccessFacade;
 import dataaccess.User;
-import librarysystem.*;
 
 public class SystemController implements ControllerInterface {
 	public static Auth currentAuth = null;
 	public static User currentUser = null;
-	private static LibWindow[] allWindows = {
-			LibrarySystem.INSTANCE,
-			LoginWindow.INSTANCE,
-			AllMemberIdsWindow.INSTANCE,
-			librarysystem.StarterPage.INSTANCE,
-			AllBookIdsWindow.INSTANCE,
-			librarysystem.AddNewMember.INSTANCE
-	};
+
 	
 	public void login(String id, String password) throws LoginException {
 		DataAccess da = new DataAccessFacade();

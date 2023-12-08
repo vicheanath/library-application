@@ -2,7 +2,6 @@ package ui;
 
 import business.LibraryMember;
 import business.SystemController;
-import librarysystem.AddNewMember;
 
 import javax.swing.*;
 import java.awt.*;
@@ -99,7 +98,6 @@ class AddMemberPanel extends JPanel implements IPanel {
 			}
 
     }
-    public static final AddNewMember INSTANCE = new AddNewMember();
 
 
     public String getMemberIdField() {
